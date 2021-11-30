@@ -13,9 +13,10 @@ import javax.crypto.spec.SecretKeySpec
  * service provider. This provides a bridge to a commonly used Java implementation that has been
  * moderately adapted to Kotlin.
  */
+@Suppress("DEPRECATION")
 class FallbackProvider : Provider(
     "FallbackProvider",
-    "1.0",
+    1.0,
     "Provides a bridge to a default implementation of the PBKDF2WithHmacSHA512 algorithm" +
             " to use when one is not already available on the device."
 ) {
