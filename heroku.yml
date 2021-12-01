@@ -1,9 +1,3 @@
 build:
   docker:
     web: Dockerfile
-  config:
-    PORT: 8080
-release:
-  command: ./gradlew bootJar
-run:
-  web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/*-SNAPSHOT.jar
