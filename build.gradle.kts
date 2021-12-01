@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "network.clusterone"
-version = "0.1.0-SNAPSHOT"
+version = "SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 configurations {
