@@ -1,0 +1,15 @@
+apiVersion: getambassador.io/v2
+kind: Host
+metadata:
+  name: cluster-api-host
+  namespace: ambassador
+spec:
+  hostname: cluster-api.clusterz.net
+  acmeProvider:
+    email: pashamad@gmail.com
+  tlsSecret:
+    name: tls2-cert
+  requestPolicy:
+    insecure:
+      action: Redirect
+      additionalPort: 8080

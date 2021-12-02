@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-cluster-api
+  namespace: backend
+  annotations:
+    cert-manager.io/issuer: letsencrypt-nginx
+spec:
+   tls:
+   - hosts:
+     - cluster-api.clusterz.net
+     secretName: letsencrypt-nginx
+  rules:
+    - host: cluster-api.clusterz.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cluster-api
+                port:
+                  number: 8080
+  ingressClassName: nginx

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cluster-api-deployment
+  namespace: backend
+  labels:
+    app: cluster-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cluster-api
+  template:
+    metadata:
+      labels:
+        app: cluster-api
+    spec:
+      containers:
+        - name: cluster-api
+          image: registry.digitalocean.com/c1ph3r/cluster-api:latest
+#          imagePullSecrets:
+#            - name: registry-c1ph3r
+          ports:
+            - containerPort: 8080

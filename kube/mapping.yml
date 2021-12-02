@@ -1,0 +1,9 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: cluster-api-backend
+  namespace: ambassador
+spec:
+  prefix: /
+  host: cluster-api.clusterz.net
+  service: cluster-api
