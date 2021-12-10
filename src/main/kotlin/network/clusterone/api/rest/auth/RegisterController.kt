@@ -21,9 +21,10 @@ class RegisterController(
     val jwtSigner: JwtSigner
 ) {
     @PostMapping("/email")
-    fun register(@RequestBody credentials: UserCredentials): Mono<ResponseEntity<User>> {
+    fun register(@RequestBody credentials: UserCredentials): Mono<ResponseEntity<String>> {
         return registrationService.registerByEmail(credentials)
             // @todo send verification code
+            .mapNotNull { jwtSigner.createJwt(it.email!!) }
             .map { ResponseEntity.ok(it) }
     }
 
