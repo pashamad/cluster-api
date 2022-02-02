@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @OpenAPIDefinition(
-    info = Info(title = "ClusterOne", version = "0.1.1"),
+    info = Info(title = "ClusterOne", version = "0.2.1"),
     security = [SecurityRequirement(name = "bearerToken")]
 )
 @SecuritySchemes(

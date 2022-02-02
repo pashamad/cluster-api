@@ -13,18 +13,10 @@ import javax.persistence.Column
  */
 abstract class AbstractAuditingEntity(
 
-    @Column(name = "created_by", nullable = false, length = 50, updatable = false)
-    @JsonIgnore
-    var createdBy: String? = null,
-
     @CreatedDate
     @Column(name = "created_date", updatable = false)
     @JsonIgnore
     var createdDate: Instant? = Instant.now(),
-
-    @Column(name = "last_modified_by", length = 50)
-    @JsonIgnore
-    var lastModifiedBy: String? = null,
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
