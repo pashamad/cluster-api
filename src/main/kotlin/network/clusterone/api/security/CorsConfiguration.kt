@@ -15,8 +15,8 @@ class CorsConfiguration {
         val corsConfig = CorsConfiguration()
         corsConfig.allowedOrigins = listOf("http://localhost:3000")
         corsConfig.allowedOriginPatterns = listOf("*")
-        corsConfig.allowedMethods = listOf("GET,POST,PUT,PATCH,DELETE")
-        corsConfig.allowedHeaders = listOf("Authorization, Content-Type")
+        corsConfig.allowedMethods = "GET,POST,PUT,PATCH,DELETE".split(",")
+        corsConfig.allowedHeaders = "Authorization,Content-Type".split(",")
         corsConfig.allowCredentials = true
         corsConfig.maxAge = 8000L
 
