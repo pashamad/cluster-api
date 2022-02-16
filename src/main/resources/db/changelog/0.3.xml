@@ -12,6 +12,9 @@
             <column name="phrase" type="text">
                 <constraints nullable="false"/>
             </column>
+            <column name="lang" type="text">
+                <constraints nullable="false"/>
+            </column>
             <column name="word_count" type="number">
                 <constraints nullable="false"/>
             </column>
