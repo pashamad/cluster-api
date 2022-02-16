@@ -1,5 +1,6 @@
 package network.clusterone.api.services.crypto
 
+import network.clusterone.api.grpc.crypto.MnemonicGrpcClient
 import network.clusterone.lib.bip39.Mnemonics
 import network.clusterone.lib.bip39.toSeed
 import org.slf4j.Logger
@@ -14,16 +15,22 @@ data class Mnemonic(
 
 @Service
 class MnemonicService(
-    val logger: Logger
+    val logger: Logger,
+    val grpc: MnemonicGrpcClient
 ) {
 
-    fun generate(count: Int = Mnemonics.WordCount.COUNT_12.count, lang: String = "en"): Mnemonic {
+    fun generateInternal(count: Int = Mnemonics.WordCount.COUNT_12.count, lang: String = "en"): Mnemonic {
         logger.debug("Generating mnemonic with {count: $count, lang: $lang}")
         val wordCount: Mnemonics.WordCount = Mnemonics.WordCount.valueOf(count)!!
         val mnemonicCode: Mnemonics.MnemonicCode = Mnemonics.MnemonicCode(wordCount)
         val mnemonicString = String(mnemonicCode.chars)
         logger.debug("Generated mnemonic: $mnemonicString")
         return Mnemonic(mnemonicString, mnemonicCode.words.size, lang)
+    }
+
+    suspend fun generate(): Mnemonic {
+        val mnemonic = grpc.getNewMnemonic()!!
+        return Mnemonic(mnemonic, 12, "en")
     }
 
     fun import(phrase: String, lang: String = "en"): Mnemonic {
