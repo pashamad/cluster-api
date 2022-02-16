@@ -170,6 +170,37 @@ public final class AccountServiceGrpc {
     return getSeedDeriveToPrivateKeyHexMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<network.clusterone.grpc.SeedDeriveToAccountRequest,
+      network.clusterone.grpc.SeedDeriveToAccountResponse> getSeedDeriveToAccountDataMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SeedDeriveToAccountData",
+      requestType = network.clusterone.grpc.SeedDeriveToAccountRequest.class,
+      responseType = network.clusterone.grpc.SeedDeriveToAccountResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<network.clusterone.grpc.SeedDeriveToAccountRequest,
+      network.clusterone.grpc.SeedDeriveToAccountResponse> getSeedDeriveToAccountDataMethod() {
+    io.grpc.MethodDescriptor<network.clusterone.grpc.SeedDeriveToAccountRequest, network.clusterone.grpc.SeedDeriveToAccountResponse> getSeedDeriveToAccountDataMethod;
+    if ((getSeedDeriveToAccountDataMethod = AccountServiceGrpc.getSeedDeriveToAccountDataMethod) == null) {
+      synchronized (AccountServiceGrpc.class) {
+        if ((getSeedDeriveToAccountDataMethod = AccountServiceGrpc.getSeedDeriveToAccountDataMethod) == null) {
+          AccountServiceGrpc.getSeedDeriveToAccountDataMethod = getSeedDeriveToAccountDataMethod =
+              io.grpc.MethodDescriptor.<network.clusterone.grpc.SeedDeriveToAccountRequest, network.clusterone.grpc.SeedDeriveToAccountResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SeedDeriveToAccountData"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  network.clusterone.grpc.SeedDeriveToAccountRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  network.clusterone.grpc.SeedDeriveToAccountResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AccountServiceMethodDescriptorSupplier("SeedDeriveToAccountData"))
+              .build();
+        }
+      }
+    }
+    return getSeedDeriveToAccountDataMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -253,6 +284,13 @@ public final class AccountServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSeedDeriveToPrivateKeyHexMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void seedDeriveToAccountData(network.clusterone.grpc.SeedDeriveToAccountRequest request,
+        io.grpc.stub.StreamObserver<network.clusterone.grpc.SeedDeriveToAccountResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSeedDeriveToAccountDataMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -290,6 +328,13 @@ public final class AccountServiceGrpc {
                 network.clusterone.grpc.SeedDeriveToAddressHexRequest,
                 network.clusterone.grpc.SeedDeriveToAddressHexResponse>(
                   this, METHODID_SEED_DERIVE_TO_PRIVATE_KEY_HEX)))
+          .addMethod(
+            getSeedDeriveToAccountDataMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                network.clusterone.grpc.SeedDeriveToAccountRequest,
+                network.clusterone.grpc.SeedDeriveToAccountResponse>(
+                  this, METHODID_SEED_DERIVE_TO_ACCOUNT_DATA)))
           .build();
     }
   }
@@ -347,6 +392,14 @@ public final class AccountServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSeedDeriveToPrivateKeyHexMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void seedDeriveToAccountData(network.clusterone.grpc.SeedDeriveToAccountRequest request,
+        io.grpc.stub.StreamObserver<network.clusterone.grpc.SeedDeriveToAccountResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSeedDeriveToAccountDataMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -396,6 +449,13 @@ public final class AccountServiceGrpc {
     public network.clusterone.grpc.SeedDeriveToAddressHexResponse seedDeriveToPrivateKeyHex(network.clusterone.grpc.SeedDeriveToAddressHexRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSeedDeriveToPrivateKeyHexMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public network.clusterone.grpc.SeedDeriveToAccountResponse seedDeriveToAccountData(network.clusterone.grpc.SeedDeriveToAccountRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSeedDeriveToAccountDataMethod(), getCallOptions(), request);
     }
   }
 
@@ -452,6 +512,14 @@ public final class AccountServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getSeedDeriveToPrivateKeyHexMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<network.clusterone.grpc.SeedDeriveToAccountResponse> seedDeriveToAccountData(
+        network.clusterone.grpc.SeedDeriveToAccountRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSeedDeriveToAccountDataMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_NEW_MNEMONIC = 0;
@@ -459,6 +527,7 @@ public final class AccountServiceGrpc {
   private static final int METHODID_GET_MASTER_KEY_FROM_MNEMONIC = 2;
   private static final int METHODID_SEED_DERIVE_TO_PUBLIC_KEY_HEX = 3;
   private static final int METHODID_SEED_DERIVE_TO_PRIVATE_KEY_HEX = 4;
+  private static final int METHODID_SEED_DERIVE_TO_ACCOUNT_DATA = 5;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -496,6 +565,10 @@ public final class AccountServiceGrpc {
         case METHODID_SEED_DERIVE_TO_PRIVATE_KEY_HEX:
           serviceImpl.seedDeriveToPrivateKeyHex((network.clusterone.grpc.SeedDeriveToAddressHexRequest) request,
               (io.grpc.stub.StreamObserver<network.clusterone.grpc.SeedDeriveToAddressHexResponse>) responseObserver);
+          break;
+        case METHODID_SEED_DERIVE_TO_ACCOUNT_DATA:
+          serviceImpl.seedDeriveToAccountData((network.clusterone.grpc.SeedDeriveToAccountRequest) request,
+              (io.grpc.stub.StreamObserver<network.clusterone.grpc.SeedDeriveToAccountResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -563,6 +636,7 @@ public final class AccountServiceGrpc {
               .addMethod(getGetMasterKeyFromMnemonicMethod())
               .addMethod(getSeedDeriveToPublicKeyHexMethod())
               .addMethod(getSeedDeriveToPrivateKeyHexMethod())
+              .addMethod(getSeedDeriveToAccountDataMethod())
               .build();
         }
       }

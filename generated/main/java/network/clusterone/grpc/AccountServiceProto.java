@@ -54,6 +54,16 @@ public final class AccountServiceProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_account_SeedDeriveToAddressHexResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_account_SeedDeriveToAccountRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_account_SeedDeriveToAccountRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_account_SeedDeriveToAccountResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_account_SeedDeriveToAccountResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -75,26 +85,33 @@ public final class AccountServiceProto {
       "sponse\022\022\n\nmaster_key\030\001 \001(\014\"K\n\035SeedDerive" +
       "ToAddressHexRequest\022\016\n\006symbol\030\001 \001(\t\022\014\n\004s" +
       "eed\030\002 \001(\014\022\014\n\004path\030\003 \001(\t\".\n\036SeedDeriveToA" +
-      "ddressHexResponse\022\014\n\004data\030\001 \001(\t*\221\001\n\010Word" +
-      "Lang\022\013\n\007ENGLISH\020\000\022\n\n\006FRENCH\020\001\022\013\n\007ITALIAN" +
-      "\020\002\022\013\n\007SPANISH\020\003\022\t\n\005CZECH\020\004\022\014\n\010JAPANESE\020\005" +
-      "\022\n\n\006KOREAN\020\006\022\025\n\021CHINESESIMPLIFIED\020\007\022\026\n\022C" +
-      "HINESETRADITIONAL\020\0102\214\004\n\016AccountService\022J" +
-      "\n\013NewMnemonic\022\033.account.NewMnemonicReque" +
-      "st\032\034.account.NewMnemonicResponse\"\000\022_\n\023Ge" +
-      "tSeedFromMnemonic\022#.account.GetSeedFromM" +
-      "nemonicRequest\032!.account.SeedFromMnemoni" +
-      "cResponse\"\000\022n\n\030GetMasterKeyFromMnemonic\022" +
-      "(.account.GetMasterKeyFromMnemonicReques" +
-      "t\032&.account.MasterKeyFromMnemonicRespons" +
-      "e\"\000\022m\n\030SeedDeriveToPublicKeyHex\022&.accoun" +
-      "t.SeedDeriveToAddressHexRequest\032\'.accoun" +
-      "t.SeedDeriveToAddressHexResponse\"\000\022n\n\031Se" +
-      "edDeriveToPrivateKeyHex\022&.account.SeedDe" +
-      "riveToAddressHexRequest\032\'.account.SeedDe" +
-      "riveToAddressHexResponse\"\000B;\n\027network.cl" +
-      "usterone.grpcB\023AccountServiceProtoP\001Z\t./" +
-      "accountb\006proto3"
+      "ddressHexResponse\022\014\n\004data\030\001 \001(\t\"H\n\032SeedD" +
+      "eriveToAccountRequest\022\016\n\006symbol\030\001 \001(\t\022\014\n" +
+      "\004seed\030\002 \001(\014\022\014\n\004path\030\003 \001(\t\"[\n\033SeedDeriveT" +
+      "oAccountResponse\022\023\n\013private_key\030\001 \001(\t\022\022\n" +
+      "\npublic_key\030\002 \001(\t\022\023\n\013public_addr\030\003 \001(\t*\221" +
+      "\001\n\010WordLang\022\013\n\007ENGLISH\020\000\022\n\n\006FRENCH\020\001\022\013\n\007" +
+      "ITALIAN\020\002\022\013\n\007SPANISH\020\003\022\t\n\005CZECH\020\004\022\014\n\010JAP" +
+      "ANESE\020\005\022\n\n\006KOREAN\020\006\022\025\n\021CHINESESIMPLIFIED" +
+      "\020\007\022\026\n\022CHINESETRADITIONAL\020\0102\364\004\n\016AccountSe" +
+      "rvice\022J\n\013NewMnemonic\022\033.account.NewMnemon" +
+      "icRequest\032\034.account.NewMnemonicResponse\"" +
+      "\000\022_\n\023GetSeedFromMnemonic\022#.account.GetSe" +
+      "edFromMnemonicRequest\032!.account.SeedFrom" +
+      "MnemonicResponse\"\000\022n\n\030GetMasterKeyFromMn" +
+      "emonic\022(.account.GetMasterKeyFromMnemoni" +
+      "cRequest\032&.account.MasterKeyFromMnemonic" +
+      "Response\"\000\022m\n\030SeedDeriveToPublicKeyHex\022&" +
+      ".account.SeedDeriveToAddressHexRequest\032\'" +
+      ".account.SeedDeriveToAddressHexResponse\"" +
+      "\000\022n\n\031SeedDeriveToPrivateKeyHex\022&.account" +
+      ".SeedDeriveToAddressHexRequest\032\'.account" +
+      ".SeedDeriveToAddressHexResponse\"\000\022f\n\027See" +
+      "dDeriveToAccountData\022#.account.SeedDeriv" +
+      "eToAccountRequest\032$.account.SeedDeriveTo" +
+      "AccountResponse\"\000B;\n\027network.clusterone." +
+      "grpcB\023AccountServiceProtoP\001Z\t./accountb\006" +
+      "proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -148,6 +165,18 @@ public final class AccountServiceProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_account_SeedDeriveToAddressHexResponse_descriptor,
         new java.lang.String[] { "Data", });
+    internal_static_account_SeedDeriveToAccountRequest_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_account_SeedDeriveToAccountRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_account_SeedDeriveToAccountRequest_descriptor,
+        new java.lang.String[] { "Symbol", "Seed", "Path", });
+    internal_static_account_SeedDeriveToAccountResponse_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_account_SeedDeriveToAccountResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_account_SeedDeriveToAccountResponse_descriptor,
+        new java.lang.String[] { "PrivateKey", "PublicKey", "PublicAddr", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
