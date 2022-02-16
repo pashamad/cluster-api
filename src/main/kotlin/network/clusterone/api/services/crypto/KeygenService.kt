@@ -57,7 +57,7 @@ class KeygenService(
 
     val derivePath = DerivePath()
 
-    suspend fun getSeedFromMnemonic(phrase: String, password: String?): String {
+    suspend fun getSeedFromMnemonic(phrase: String, password: String? = ""): String {
         logger.info("Generating seed from mnemonic $phrase with password '$password'")
         val seed = keygenGrpcClient.getSeedFromMnemonic(phrase, password!!)
         logger.info("Generated seed: $seed")

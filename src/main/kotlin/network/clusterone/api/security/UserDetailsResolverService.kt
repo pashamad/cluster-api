@@ -1,7 +1,7 @@
 package network.clusterone.api.security
 
+import network.clusterone.api.domain.User
 import network.clusterone.api.repository.UserRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Primary
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.core.userdetails.UserDetails
@@ -16,11 +16,16 @@ class UserDetailsResolverService(
 ) : ReactiveUserDetailsService {
 
     override fun findByUsername(username: String): Mono<UserDetails?> {
+        return findUserByUsername(username)
+            .map { it!!.toUserDetails() }
+    }
+
+    fun findUserByUsername(username: String): Mono<User?> {
         return userRepository.findOneByEmail(username)
             .switchIfEmpty(Mono.defer {
                 Mono.error(
                     UsernameNotFoundException("User Not Found")
                 )
-            }).map { it!!.toUserDetails() }
+            })
     }
 }
