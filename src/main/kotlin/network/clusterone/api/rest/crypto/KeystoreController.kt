@@ -1,7 +1,7 @@
 package network.clusterone.api.rest.crypto
 
 import io.swagger.v3.oas.annotations.tags.Tag
-import network.clusterone.api.domain.KeyDescriptor
+import network.clusterone.api.domain.KeyStore
 import network.clusterone.api.services.crypto.KeygenService
 import network.clusterone.api.services.crypto.Keystore
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,7 +24,7 @@ class KeystoreController(
     }
 
     @PostMapping(value = ["getDescriptor"])
-    fun getDescriptor(@RequestBody mnemonic: MnemonicData): Mono<KeyDescriptor> {
+    fun getDescriptor(@RequestBody mnemonic: MnemonicData): Mono<KeyStore> {
         return Mono.empty()
     }
 }

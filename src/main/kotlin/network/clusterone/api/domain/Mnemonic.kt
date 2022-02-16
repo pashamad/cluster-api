@@ -4,28 +4,29 @@ import org.hibernate.annotations.NaturalId
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.util.*
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 import javax.validation.constraints.NotNull
 
-@Table("key_desc")
-open class KeyDescriptor(
+@Table("mnemonic")
+open class Mnemonic(
 
     @Id
     @NaturalId
     var id: UUID? = null,
 
-    @field:NotNull
-    var name: String? = null,
+    @field: NotNull
+    var phrase: String? = null,
 
     @field: NotNull
-    var network: String? = null,
+    var wordCount: Int,
 
     @field: NotNull
-    var address: String? = null,
+    var seed: String,
 
-    var mnemonic: String? = null,
-
-    // TODO: must be binary data field
-    var keystore: String? = null
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    var user: User? = null,
 
 ) : AbstractAuditingEntity() {
 }

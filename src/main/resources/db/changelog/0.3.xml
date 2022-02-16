@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet id="0.3" author="pm">
+        <!-- Mnemonic table -->
+        <createTable tableName="mnemonic">
+            <column name="id" type="${uuidType}" defaultValueComputed="${uuidFunction}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="phrase" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="word_count" type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seed" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_mnemonic_user" references="users(id)"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+        <!-- KeyStore table -->
+        <createTable tableName="keystore">
+            <column name="id" type="${uuidType}" defaultValueComputed="${uuidFunction}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="network" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="path" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="public_key" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="private_key" type="text"/>
+            <column name="user_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_keystore_user" references="users(id)"/>
+            </column>
+            <column name="mnemonic_id" type="${uuidType}">
+                <constraints nullable="true" foreignKeyName="fk_keystore_mnemonic" references="mnemonic(id)"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+        <!-- Account table -->
+        <createTable tableName="account">
+            <column name="id" type="${uuidType}" defaultValueComputed="${uuidFunction}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="network" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="decimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_account_user" references="users(id)"/>
+            </column>
+            <column name="keystore_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_account_keystore" references="keystore(id)"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

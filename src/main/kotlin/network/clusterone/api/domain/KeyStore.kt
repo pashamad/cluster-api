@@ -3,38 +3,39 @@ package network.clusterone.api.domain
 import org.hibernate.annotations.NaturalId
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
-import java.math.BigDecimal
 import java.util.*
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
-import javax.persistence.OneToOne
 import javax.validation.constraints.NotNull
 
-@Table("account")
-class Account(
+@Table("keystore")
+open class KeyStore(
 
     @Id
     @NaturalId
     var id: UUID? = null,
 
-    @field:NotNull
-    var name: String? = null,
-
     @field: NotNull
     var network: String? = null,
 
     @field: NotNull
+    var path: String? = null,
+
+    @field: NotNull
     var address: String? = null,
 
-    var balance: BigDecimal? = BigDecimal(0),
+    @field: NotNull
+    var publicKey: String? = null,
+
+    var privateKey: String? = null,
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     var user: User? = null,
 
-    @OneToOne
-    @JoinColumn(name = "keystore_id", referencedColumnName = "id")
-    var keystore: KeyStore? = null
+    @ManyToOne
+    @JoinColumn(name = "mnemonic_id", referencedColumnName = "id", nullable = true)
+    var mnemonic: Mnemonic? = null
 
 ) : AbstractAuditingEntity() {
 }
