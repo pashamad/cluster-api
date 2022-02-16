@@ -17,7 +17,7 @@ class JwtSigner {
             .signWith(keyPair.private, SignatureAlgorithm.RS256)
             .setSubject(userId)
             .setIssuer("cluster-one") // @todo make configurable
-            .setExpiration(Date.from(Instant.now().plus(Duration.ofMinutes(15)))) // @todo make configurable
+            .setExpiration(Date.from(Instant.now().plus(Duration.ofMinutes(120)))) // @todo make configurable
             .setIssuedAt(Date.from(Instant.now()))
             .compact()
     }
