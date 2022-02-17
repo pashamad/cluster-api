@@ -28,6 +28,8 @@ open class Mnemonic(
     @field: NotNull
     var seed: String,
 
+    var name: String?,
+
     @field: NotNull
     var user_id: UUID,
 

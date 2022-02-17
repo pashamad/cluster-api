@@ -19,12 +19,12 @@ class UserMnemonicService(
     val userDetails: UserDetailsResolverService
 ) {
 
-    fun addUserMnemonic(phrase: String, principal: Principal): Mono<Mnemonic> {
+    fun addUserMnemonic(phrase: String, name: String?, principal: Principal): Mono<Mnemonic> {
         val user = userDetails.findUserByUsername(principal.name)
         val seed = runBlocking { keygen.getSeedFromMnemonic(phrase) }
         return user.flatMap {
             val mnemonic = Mnemonic(
-                null, phrase, 12, "en", seed, it?.id!!
+                null, phrase, 12, "en", seed, name, it?.id!!
             )
             repo.save(mnemonic)
         }

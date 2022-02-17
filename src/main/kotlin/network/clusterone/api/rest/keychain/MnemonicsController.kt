@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.security.Principal
 
-data class CreateMnemonicRequest(val phrase: String)
+data class CreateMnemonicRequest(val phrase: String, val name: String?)
 
 data class CreateAccountsRequest(
     val phrase: String,
@@ -29,7 +29,7 @@ class MnemonicsController(
         @RequestBody request: CreateMnemonicRequest,
         principal: Principal
     ): Mono<Mnemonic> {
-        return mnemonicService.addUserMnemonic(request.phrase, principal)
+        return mnemonicService.addUserMnemonic(request.phrase, request.name, principal)
     }
 
     @GetMapping(value = [""])

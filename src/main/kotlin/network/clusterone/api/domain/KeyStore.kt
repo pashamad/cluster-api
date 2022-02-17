@@ -1,5 +1,6 @@
 package network.clusterone.api.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.NaturalId
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
@@ -16,25 +17,32 @@ open class KeyStore(
     var id: UUID? = null,
 
     @field: NotNull
-    var network: String? = null,
+    var network: String,
 
     @field: NotNull
-    var path: String? = null,
+    var path: String,
 
     @field: NotNull
-    var address: String? = null,
+    var address: String,
 
     @field: NotNull
-    var publicKey: String? = null,
+    var publicKey: String,
 
     var privateKey: String? = null,
 
+    @field: NotNull
+    var user_id: UUID,
+
+    var mnemonic_id: UUID? = null,
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     var user: User? = null,
 
     @ManyToOne
     @JoinColumn(name = "mnemonic_id", referencedColumnName = "id", nullable = true)
+    @JsonIgnore
     var mnemonic: Mnemonic? = null
 
 ) : AbstractAuditingEntity() {
