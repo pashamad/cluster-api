@@ -1,5 +1,6 @@
 package network.clusterone.api.services.wallet
 
+import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.coroutines.runBlocking
 import network.clusterone.api.domain.Account
 import network.clusterone.api.services.account.AccountService
@@ -12,9 +13,25 @@ import reactor.core.publisher.Mono
 import java.security.Principal
 
 data class AccountFromMnemonicRequest(
+    @Schema(
+        description = "Mnemonic phrase.",
+        example = "web survey patrol blush basic glass loop shield again seat vicious enable", required = true
+    )
     val phrase: String,
+    @Schema(
+        description = "Network identifier. Can be one of [eth, sol].",
+        example = "eth", required = true
+    )
     val network: String,
+    @Schema(
+        description = "Semantic name of the new account.",
+        example = "My ETH 1", required = true
+    )
     val name: String,
+    @Schema(
+        description = "Optional password for seed generation.",
+        example = "", required = true, defaultValue = ""
+    )
     val password: String?
 )
 

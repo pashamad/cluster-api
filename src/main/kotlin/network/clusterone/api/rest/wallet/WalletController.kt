@@ -1,5 +1,9 @@
 package network.clusterone.api.rest.wallet
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import network.clusterone.api.domain.Account
 import network.clusterone.api.domain.Wallet
@@ -11,9 +15,9 @@ import java.security.Principal
 
 @RestController
 @RequestMapping("/wallet")
-@Tag(name = "wallet")
+@Tag(name = "wallet", description = "Top-level wallet operations")
 class WalletController(
-     val walletService: WalletService
+    val walletService: WalletService
 ) {
 
     @GetMapping(value = [""])
@@ -21,6 +25,43 @@ class WalletController(
         return Mono.just(Wallet())
     }
 
+    @Operation(
+        summary = "Creates account from mnemonic",
+        description = "Creates and stores a new named account for a specific network, " +
+                "based on a mnemonic phrase, and an optional password.",
+        method = "POST",
+        tags = ["wallet"],
+        requestBody = io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Request body containing name, mnemonic phrase, network, password (optional)",
+            content = [Content(
+                mediaType = "application/json",
+                schema = Schema(implementation = AccountFromMnemonicRequest::class)
+            )],
+            required = true
+        ),
+        responses = [
+            ApiResponse(
+                responseCode = "201",
+                description = "Successful operation",
+                content = [Content(schema = Schema(implementation = Account::class), mediaType = "application/json")]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Invalid request",
+                content = [Content(schema = Schema(hidden = true))]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "Unauthenticated",
+                content = [Content(schema = Schema(hidden = true))]
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "Internal server error",
+                content = [Content(schema = Schema(hidden = true))]
+            ),
+        ]
+    )
     @PostMapping(value = ["accountFromMnemonic"])
     fun createAccountFromMnemonic(
         principal: Principal,
