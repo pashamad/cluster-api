@@ -17,7 +17,7 @@ data class KeyData(
     val publicKey: String,
     val privateKey: String?,
     val name: String?,
-    val mnemonicId: UUID?
+    val mnemonicId: UUID? = null
 )
 
 data class KeyPatch(

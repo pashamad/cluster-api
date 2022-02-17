@@ -21,6 +21,7 @@
             <column name="seed" type="text">
                 <constraints nullable="false"/>
             </column>
+            <column name="name" type="text"/>
             <column name="user_id" type="${uuidType}">
                 <constraints nullable="false" foreignKeyName="fk_mnemonic_user" references="users(id)"/>
             </column>
@@ -31,9 +32,6 @@
         <createTable tableName="keystore">
             <column name="id" type="${uuidType}" defaultValueComputed="${uuidFunction}">
                 <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="text">
-                <constraints nullable="false"/>
             </column>
             <column name="network" type="text">
                 <constraints nullable="false"/>
@@ -48,6 +46,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="private_key" type="text"/>
+            <column name="name" type="text"/>
             <column name="user_id" type="${uuidType}">
                 <constraints nullable="false" foreignKeyName="fk_keystore_user" references="users(id)"/>
             </column>

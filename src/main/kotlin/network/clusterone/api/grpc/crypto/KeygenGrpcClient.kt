@@ -12,7 +12,8 @@ import java.util.*
 data class AccountData(
     val privateKey: String,
     val publicKey: String,
-    val address: String
+    val address: String,
+    val path: String
 )
 
 @Service
@@ -39,7 +40,7 @@ class KeygenGrpcClient(
             .setPath(path)
             .build()
         val response = stub.seedDeriveToAccountData(request)
-        return AccountData(response.privateKey, response.publicKey, response.publicAddr)
+        return AccountData(response.privateKey, response.publicKey, response.publicAddr, path)
     }
 
     suspend fun getPublicKey(net: String, seed: String, path: String): String {
