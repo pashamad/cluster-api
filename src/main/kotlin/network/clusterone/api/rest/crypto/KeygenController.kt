@@ -17,7 +17,8 @@ data class SeedDerivationRequest(val seed: String, val net: String, val acc: Int
 data class AccountDataResponse(
     val privateKey: String,
     val publicKey: String,
-    val address: String
+    val address: String,
+    val path: String
 )
 
 @RestController
@@ -39,7 +40,7 @@ class KeygenController(
         return Mono.just(runBlocking {
             keygenService.getAccountData(request.net, request.seed, request.acc, request.index)
         })
-            .map { AccountDataResponse(it.privateKey, it.publicKey, it.address) }
+            .map { AccountDataResponse(it.privateKey, it.publicKey, it.address, it.path) }
     }
 
     @PostMapping(value = ["/getPublicKey"])
