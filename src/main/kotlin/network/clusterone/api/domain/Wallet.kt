@@ -1,5 +1,6 @@
 package network.clusterone.api.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.NaturalId
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
@@ -14,6 +15,7 @@ open class Wallet(
 
     @Id
     @NaturalId
+    @JsonIgnore
     var id: UUID? = null,
 
     @field:NotNull
@@ -21,6 +23,7 @@ open class Wallet(
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     var user: User? = null
 
 ): AbstractAuditingEntity() {
