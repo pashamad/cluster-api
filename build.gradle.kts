@@ -84,6 +84,9 @@ dependencies {
     runtimeOnly("io.grpc:grpc-netty:${rootProject.ext["grpcVersion"]}")
     runtimeOnly("io.grpc:grpc-netty-shaded:1.44.0")
 
+    // sendgrid
+    implementation("com.sendgrid:sendgrid-java:4.8.3")
+
     api(kotlin("stdlib"))
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutinesVersion"]}")
 

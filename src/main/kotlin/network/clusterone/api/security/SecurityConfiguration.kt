@@ -41,6 +41,7 @@ class SecurityConfiguration(
             // .pathMatchers(HttpMethod.DELETE).denyAll()
             .pathMatchers(HttpMethod.POST, "/auth/register/**").permitAll()
             .pathMatchers(HttpMethod.POST, "/auth/login/**").permitAll()
+            .pathMatchers(HttpMethod.POST, "/auth/password/**").permitAll()
             .pathMatchers("/crypto/**").permitAll()
             .pathMatchers("/v3/api-docs/**").permitAll()
             .pathMatchers("/swagger-ui").permitAll()
