@@ -2,6 +2,7 @@ package network.clusterone.api.grpc.crypto
 
 import com.google.protobuf.kotlin.toByteString
 import network.clusterone.api.grpc.GrpcClientService
+import network.clusterone.api.grpc.GrpcServiceId
 import network.clusterone.grpc.AccountServiceGrpcKt
 import network.clusterone.grpc.GetSeedFromMnemonicRequest
 import network.clusterone.grpc.SeedDeriveToAccountRequest
@@ -18,9 +19,9 @@ data class AccountData(
 
 @Service
 class KeygenGrpcClient(
-    val grpc: GrpcClientService
+    final val grpc: GrpcClientService
 ) {
-    private val stub = AccountServiceGrpcKt.AccountServiceCoroutineStub(grpc.getChannel())
+    private val stub = AccountServiceGrpcKt.AccountServiceCoroutineStub(grpc.getChannel(GrpcServiceId.ACCOUNT))
 
     suspend fun getSeedFromMnemonic(phrase: String, password: String = ""): String {
         val request = GetSeedFromMnemonicRequest.newBuilder()
