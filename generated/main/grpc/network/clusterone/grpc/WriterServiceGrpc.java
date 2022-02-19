@@ -300,7 +300,7 @@ public final class WriterServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return network.clusterone.grpc.AccountWriterProto.getDescriptor();
+      return network.clusterone.grpc.WriterServiceProto.getDescriptor();
     }
 
     @java.lang.Override

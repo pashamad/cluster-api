@@ -29,7 +29,7 @@ buildscript {
 }
 
 group = "network.clusterone"
-version = "0.2.2"
+version = "SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 configurations {

@@ -34,7 +34,7 @@ class PasswordController(
 
     @PostMapping(value = ["confirmResetByCode"])
     fun confirmResetByCode(@RequestBody request: ConfirmResetByCodeRequest): Mono<Void> {
-        return Mono.empty()
+        return passwordService.confirmReset(request.sessionId, request.code)
     }
 
     @PostMapping(value = ["confirmResetByToken"])

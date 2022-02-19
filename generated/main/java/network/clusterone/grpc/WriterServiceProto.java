@@ -3,8 +3,8 @@
 
 package network.clusterone.grpc;
 
-public final class AccountWriterProto {
-  private AccountWriterProto() {}
+public final class WriterServiceProto {
+  private WriterServiceProto() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -55,7 +55,7 @@ public final class AccountWriterProto {
       "eRequest\032\032.writer.GetBalanceResponse\"\000\022B" +
       "\n\nSendFromTo\022\031.writer.SendFromToRequest\032" +
       "\027.writer.SendFromToReply\"\000B9\n\027network.cl" +
-      "usterone.grpcB\022AccountWriterProtoP\001Z\010./w" +
+      "usterone.grpcB\022WriterServiceProtoP\001Z\010./w" +
       "riterb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor

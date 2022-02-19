@@ -16,4 +16,7 @@ interface AccountRepository : R2dbcRepository<Account, UUID> {
 
     @Query("SELECT * FROM account WHERE id = :id AND user_id = :userId")
     fun findByIdAndUser(id: UUID, userId: UUID): Mono<Account?>
+
+    @Query("select a.* from users u left join account a on a.user_id = u.id where u.email = :email and a.id = :id")
+    fun findByEmailAndId(email: String, id: UUID): Mono<Account?>
 }

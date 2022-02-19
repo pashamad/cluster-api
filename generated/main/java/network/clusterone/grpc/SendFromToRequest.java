@@ -104,13 +104,13 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return network.clusterone.grpc.AccountWriterProto.internal_static_writer_SendFromToRequest_descriptor;
+    return network.clusterone.grpc.WriterServiceProto.internal_static_writer_SendFromToRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return network.clusterone.grpc.AccountWriterProto.internal_static_writer_SendFromToRequest_fieldAccessorTable
+    return network.clusterone.grpc.WriterServiceProto.internal_static_writer_SendFromToRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             network.clusterone.grpc.SendFromToRequest.class, network.clusterone.grpc.SendFromToRequest.Builder.class);
   }
@@ -508,13 +508,13 @@ private static final long serialVersionUID = 0L;
       network.clusterone.grpc.SendFromToRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return network.clusterone.grpc.AccountWriterProto.internal_static_writer_SendFromToRequest_descriptor;
+      return network.clusterone.grpc.WriterServiceProto.internal_static_writer_SendFromToRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return network.clusterone.grpc.AccountWriterProto.internal_static_writer_SendFromToRequest_fieldAccessorTable
+      return network.clusterone.grpc.WriterServiceProto.internal_static_writer_SendFromToRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               network.clusterone.grpc.SendFromToRequest.class, network.clusterone.grpc.SendFromToRequest.Builder.class);
     }
@@ -553,7 +553,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return network.clusterone.grpc.AccountWriterProto.internal_static_writer_SendFromToRequest_descriptor;
+      return network.clusterone.grpc.WriterServiceProto.internal_static_writer_SendFromToRequest_descriptor;
     }
 
     @java.lang.Override
