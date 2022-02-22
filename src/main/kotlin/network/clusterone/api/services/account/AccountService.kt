@@ -6,10 +6,16 @@ import network.clusterone.api.repository.AccountRepository
 import network.clusterone.api.security.UserDetailsResolverService
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
+import org.webjars.NotFoundException
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.math.BigDecimal
 import java.security.Principal
+import java.util.*
+
+data class PatchAccountRequest(
+    val name: String?
+)
 
 @Service
 class AccountService(
@@ -32,5 +38,26 @@ class AccountService(
         val user = userDetails.findUserByUsername(principal.name)
         return user.map { it!! }
             .flatMapMany { repo.findAllByUserId(it.id!!) }
+    }
+
+    fun patchAccount(principal: Principal, id: UUID, request: PatchAccountRequest): Mono<Account> {
+        val user = userDetails.findUserByUsername(principal.name)
+        val account = repo.findById(id)
+        return user.zipWith(account)
+            .flatMap {
+                if (it.t2.user_id != it.t1.id) {
+                    error(NotFoundException("Account not found"))
+                } else {
+                    Mono.just(it.t2)
+                }
+            }
+            .flatMap {
+                if (request.name != null) {
+                    it.name = request.name
+                    repo.save(it)
+                } else {
+                    Mono.just(it)
+                }
+            }
     }
 }
