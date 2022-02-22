@@ -60,6 +60,9 @@ class Account(
     @field: NotNull
     var keystore_id: UUID,
 
+    @field: NotNull
+    var isEnabled: Boolean = true
+
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id", referencedColumnName = "users(id)")
 //    @JsonIgnore

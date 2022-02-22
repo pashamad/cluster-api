@@ -14,7 +14,8 @@ import java.security.Principal
 import java.util.*
 
 data class PatchAccountRequest(
-    val name: String?
+    val name: String?,
+    val isEnabled: Boolean?
 )
 
 @Service
@@ -52,12 +53,16 @@ class AccountService(
                 }
             }
             .flatMap {
+                var changed = false
                 if (request.name != null) {
+                    changed = it.name != request.name
                     it.name = request.name
-                    repo.save(it)
-                } else {
-                    Mono.just(it)
                 }
+                if (request.isEnabled !== null) {
+                    changed = changed || (it.isEnabled != request.isEnabled)
+                    it.isEnabled = request.isEnabled
+                }
+                if (changed) repo.save(it) else Mono.just(it)
             }
     }
 }
