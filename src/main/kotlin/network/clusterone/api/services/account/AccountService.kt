@@ -1,7 +1,9 @@
 package network.clusterone.api.services.account
 
+import kotlinx.coroutines.runBlocking
 import network.clusterone.api.domain.Account
 import network.clusterone.api.domain.KeyStore
+import network.clusterone.api.grpc.writer.WriterGrpcClient
 import network.clusterone.api.repository.AccountRepository
 import network.clusterone.api.security.UserDetailsResolverService
 import org.slf4j.Logger
@@ -22,7 +24,8 @@ data class PatchAccountRequest(
 class AccountService(
     val logger: Logger,
     val repo: AccountRepository,
-    val userDetails: UserDetailsResolverService
+    val userDetails: UserDetailsResolverService,
+    val grpc: WriterGrpcClient
 ) {
 
     fun createAccountFromKey(key: KeyStore, name: String, principal: Principal): Mono<Account> {
@@ -39,6 +42,23 @@ class AccountService(
         val user = userDetails.findUserByUsername(principal.name)
         return user.map { it!! }
             .flatMapMany { repo.findAllByUserId(it.id!!) }
+            .flatMap {
+                updateAccountBalance(it)
+            }
+    }
+
+    fun getBalanceOf(account: Account): Mono<BigDecimal> {
+        return Mono.just(BigDecimal.ZERO)
+            .map {
+                runBlocking { grpc.getBalanceOf(account.network!!, account.address!!) }
+            }
+    }
+
+    private fun updateAccountBalance(account: Account): Mono<Account> {
+        return getBalanceOf(account).flatMap {
+            account.balance = it
+            Mono.just(account)
+        }
     }
 
     fun patchAccount(principal: Principal, id: UUID, request: PatchAccountRequest): Mono<Account> {
