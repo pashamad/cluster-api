@@ -19,7 +19,7 @@ import java.security.Principal
 
 @RestController
 @RequestMapping("/auth/login")
-@Tag(name = "auth")
+@Tag(name = "auth", description = "Methods responsible for user authentication/registration")
 class LoginController(
     private val jwtSigner: JwtSigner,
     private val authService: AuthenticationService,
