@@ -51,6 +51,6 @@ class ResetPassSession(
 
     @Column(name = "valid_till", updatable = false)
     @field: NotNull
-    var validTill: Instant = Instant.now().plusSeconds(15 * 60) // todo: config
+    var validTill: Instant = Instant.now().plusSeconds(900L) // todo: config
 ) {
 }

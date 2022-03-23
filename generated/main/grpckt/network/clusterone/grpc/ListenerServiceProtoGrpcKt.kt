@@ -23,44 +23,46 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
-import network.clusterone.grpc.WriterServiceGrpc.getServiceDescriptor
+import network.clusterone.grpc.ListenerServiceGrpc.getServiceDescriptor
 
 /**
- * Holder for Kotlin coroutine-based client and server APIs for writer.WriterService.
+ * Holder for Kotlin coroutine-based client and server APIs for listener.ListenerService.
  */
-object WriterServiceGrpcKt {
-  const val SERVICE_NAME: String = WriterServiceGrpc.SERVICE_NAME
+object ListenerServiceGrpcKt {
+  const val SERVICE_NAME: String = ListenerServiceGrpc.SERVICE_NAME
 
   @JvmStatic
   val serviceDescriptor: ServiceDescriptor
-    get() = WriterServiceGrpc.getServiceDescriptor()
+    get() = ListenerServiceGrpc.getServiceDescriptor()
 
-  val getBalanceOfMethod: MethodDescriptor<GetBalanceRequest, GetBalanceResponse>
+  val addAddressMethod: MethodDescriptor<AddAddressRequest, AddAddressResponse>
     @JvmStatic
-    get() = WriterServiceGrpc.getGetBalanceOfMethod()
+    get() = ListenerServiceGrpc.getAddAddressMethod()
 
-  val sendFromToMethod: MethodDescriptor<SendFromToRequest, SendFromToReply>
+  val addTransactionMethod: MethodDescriptor<AddTransactionRequest, AddTransactionResponse>
     @JvmStatic
-    get() = WriterServiceGrpc.getSendFromToMethod()
+    get() = ListenerServiceGrpc.getAddTransactionMethod()
 
-  val getTxByHashMethod: MethodDescriptor<GetTxByHashRequest, GetTxByHashResponse>
+  val transactionsByAddressMethod: MethodDescriptor<TransactionsByAddressRequest,
+      TransactionsByAddressResponse>
     @JvmStatic
-    get() = WriterServiceGrpc.getGetTxByHashMethod()
+    get() = ListenerServiceGrpc.getTransactionsByAddressMethod()
 
-  val getTxStatusByHashMethod: MethodDescriptor<GetTxByHashRequest, GetTxStatusByHashResponse>
+  val transactionsByAccountMethod: MethodDescriptor<TransactionsByAccountRequest,
+      TransactionsByAccountResponse>
     @JvmStatic
-    get() = WriterServiceGrpc.getGetTxStatusByHashMethod()
+    get() = ListenerServiceGrpc.getTransactionsByAccountMethod()
 
   /**
-   * A stub for issuing RPCs to a(n) writer.WriterService service as suspending coroutines.
+   * A stub for issuing RPCs to a(n) listener.ListenerService service as suspending coroutines.
    */
-  @StubFor(WriterServiceGrpc::class)
-  class WriterServiceCoroutineStub @JvmOverloads constructor(
+  @StubFor(ListenerServiceGrpc::class)
+  class ListenerServiceCoroutineStub @JvmOverloads constructor(
     channel: Channel,
     callOptions: CallOptions = DEFAULT
-  ) : AbstractCoroutineStub<WriterServiceCoroutineStub>(channel, callOptions) {
-    override fun build(channel: Channel, callOptions: CallOptions): WriterServiceCoroutineStub =
-        WriterServiceCoroutineStub(channel, callOptions)
+  ) : AbstractCoroutineStub<ListenerServiceCoroutineStub>(channel, callOptions) {
+    override fun build(channel: Channel, callOptions: CallOptions): ListenerServiceCoroutineStub =
+        ListenerServiceCoroutineStub(channel, callOptions)
 
     /**
      * Executes this RPC and returns the response message, suspending until the RPC completes
@@ -74,10 +76,10 @@ object WriterServiceGrpcKt {
      *
      * @return The single response from the server.
      */
-    suspend fun getBalanceOf(request: GetBalanceRequest, headers: Metadata = Metadata()):
-        GetBalanceResponse = unaryRpc(
+    suspend fun addAddress(request: AddAddressRequest, headers: Metadata = Metadata()):
+        AddAddressResponse = unaryRpc(
       channel,
-      WriterServiceGrpc.getGetBalanceOfMethod(),
+      ListenerServiceGrpc.getAddAddressMethod(),
       request,
       callOptions,
       headers
@@ -94,10 +96,10 @@ object WriterServiceGrpcKt {
      *
      * @return The single response from the server.
      */
-    suspend fun sendFromTo(request: SendFromToRequest, headers: Metadata = Metadata()):
-        SendFromToReply = unaryRpc(
+    suspend fun addTransaction(request: AddTransactionRequest, headers: Metadata = Metadata()):
+        AddTransactionResponse = unaryRpc(
       channel,
-      WriterServiceGrpc.getSendFromToMethod(),
+      ListenerServiceGrpc.getAddTransactionMethod(),
       request,
       callOptions,
       headers
@@ -114,10 +116,10 @@ object WriterServiceGrpcKt {
      *
      * @return The single response from the server.
      */
-    suspend fun getTxByHash(request: GetTxByHashRequest, headers: Metadata = Metadata()):
-        GetTxByHashResponse = unaryRpc(
+    suspend fun transactionsByAddress(request: TransactionsByAddressRequest, headers: Metadata =
+        Metadata()): TransactionsByAddressResponse = unaryRpc(
       channel,
-      WriterServiceGrpc.getGetTxByHashMethod(),
+      ListenerServiceGrpc.getTransactionsByAddressMethod(),
       request,
       callOptions,
       headers
@@ -134,23 +136,23 @@ object WriterServiceGrpcKt {
      *
      * @return The single response from the server.
      */
-    suspend fun getTxStatusByHash(request: GetTxByHashRequest, headers: Metadata = Metadata()):
-        GetTxStatusByHashResponse = unaryRpc(
+    suspend fun transactionsByAccount(request: TransactionsByAccountRequest, headers: Metadata =
+        Metadata()): TransactionsByAccountResponse = unaryRpc(
       channel,
-      WriterServiceGrpc.getGetTxStatusByHashMethod(),
+      ListenerServiceGrpc.getTransactionsByAccountMethod(),
       request,
       callOptions,
       headers
     )}
 
   /**
-   * Skeletal implementation of the writer.WriterService service based on Kotlin coroutines.
+   * Skeletal implementation of the listener.ListenerService service based on Kotlin coroutines.
    */
-  abstract class WriterServiceCoroutineImplBase(
+  abstract class ListenerServiceCoroutineImplBase(
     coroutineContext: CoroutineContext = EmptyCoroutineContext
   ) : AbstractCoroutineServerImpl(coroutineContext) {
     /**
-     * Returns the response to an RPC for writer.WriterService.GetBalanceOf.
+     * Returns the response to an RPC for listener.ListenerService.AddAddress.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
      * [Status].  If this method fails with a [java.util.concurrent.CancellationException], the RPC
@@ -160,11 +162,11 @@ object WriterServiceGrpcKt {
      *
      * @param request The request from the client.
      */
-    open suspend fun getBalanceOf(request: GetBalanceRequest): GetBalanceResponse = throw
-        StatusException(UNIMPLEMENTED.withDescription("Method writer.WriterService.GetBalanceOf is unimplemented"))
+    open suspend fun addAddress(request: AddAddressRequest): AddAddressResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method listener.ListenerService.AddAddress is unimplemented"))
 
     /**
-     * Returns the response to an RPC for writer.WriterService.SendFromTo.
+     * Returns the response to an RPC for listener.ListenerService.AddTransaction.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
      * [Status].  If this method fails with a [java.util.concurrent.CancellationException], the RPC
@@ -174,11 +176,11 @@ object WriterServiceGrpcKt {
      *
      * @param request The request from the client.
      */
-    open suspend fun sendFromTo(request: SendFromToRequest): SendFromToReply = throw
-        StatusException(UNIMPLEMENTED.withDescription("Method writer.WriterService.SendFromTo is unimplemented"))
+    open suspend fun addTransaction(request: AddTransactionRequest): AddTransactionResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method listener.ListenerService.AddTransaction is unimplemented"))
 
     /**
-     * Returns the response to an RPC for writer.WriterService.GetTxByHash.
+     * Returns the response to an RPC for listener.ListenerService.TransactionsByAddress.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
      * [Status].  If this method fails with a [java.util.concurrent.CancellationException], the RPC
@@ -188,11 +190,12 @@ object WriterServiceGrpcKt {
      *
      * @param request The request from the client.
      */
-    open suspend fun getTxByHash(request: GetTxByHashRequest): GetTxByHashResponse = throw
-        StatusException(UNIMPLEMENTED.withDescription("Method writer.WriterService.GetTxByHash is unimplemented"))
+    open suspend fun transactionsByAddress(request: TransactionsByAddressRequest):
+        TransactionsByAddressResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method listener.ListenerService.TransactionsByAddress is unimplemented"))
 
     /**
-     * Returns the response to an RPC for writer.WriterService.GetTxStatusByHash.
+     * Returns the response to an RPC for listener.ListenerService.TransactionsByAccount.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
      * [Status].  If this method fails with a [java.util.concurrent.CancellationException], the RPC
@@ -202,30 +205,30 @@ object WriterServiceGrpcKt {
      *
      * @param request The request from the client.
      */
-    open suspend fun getTxStatusByHash(request: GetTxByHashRequest): GetTxStatusByHashResponse =
-        throw
-        StatusException(UNIMPLEMENTED.withDescription("Method writer.WriterService.GetTxStatusByHash is unimplemented"))
+    open suspend fun transactionsByAccount(request: TransactionsByAccountRequest):
+        TransactionsByAccountResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method listener.ListenerService.TransactionsByAccount is unimplemented"))
 
     final override fun bindService(): ServerServiceDefinition = builder(getServiceDescriptor())
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
-      descriptor = WriterServiceGrpc.getGetBalanceOfMethod(),
-      implementation = ::getBalanceOf
+      descriptor = ListenerServiceGrpc.getAddAddressMethod(),
+      implementation = ::addAddress
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
-      descriptor = WriterServiceGrpc.getSendFromToMethod(),
-      implementation = ::sendFromTo
+      descriptor = ListenerServiceGrpc.getAddTransactionMethod(),
+      implementation = ::addTransaction
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
-      descriptor = WriterServiceGrpc.getGetTxByHashMethod(),
-      implementation = ::getTxByHash
+      descriptor = ListenerServiceGrpc.getTransactionsByAddressMethod(),
+      implementation = ::transactionsByAddress
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
-      descriptor = WriterServiceGrpc.getGetTxStatusByHashMethod(),
-      implementation = ::getTxStatusByHash
+      descriptor = ListenerServiceGrpc.getTransactionsByAccountMethod(),
+      implementation = ::transactionsByAccount
     )).build()
   }
 }

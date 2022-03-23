@@ -35,11 +35,11 @@ class PasswordService(
         val user = getUser(email)
             .switchIfEmpty(Mono.error(UserNotFoundException()))
 
-        // reset session time limit threshold
+        // todo: reset session time limit threshold
         val threshold = user.flatMap { getLastValidSession(it) }
             .mapNotNull {
                 // 4 minute threshold
-                val t = it?.createdDate!!.plusSeconds(60 * 4)
+                val t = it?.createdDate!!.plusSeconds(240L)
                 val msg = "Password reset is on hold for _ seconds"
                 if (t.isAfter(Instant.now())) Mono.error(
                     HttpClientErrorException.Conflict.create(

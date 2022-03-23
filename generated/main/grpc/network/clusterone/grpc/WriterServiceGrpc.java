@@ -77,6 +77,68 @@ public final class WriterServiceGrpc {
     return getSendFromToMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<network.clusterone.grpc.GetTxByHashRequest,
+      network.clusterone.grpc.GetTxByHashResponse> getGetTxByHashMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetTxByHash",
+      requestType = network.clusterone.grpc.GetTxByHashRequest.class,
+      responseType = network.clusterone.grpc.GetTxByHashResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<network.clusterone.grpc.GetTxByHashRequest,
+      network.clusterone.grpc.GetTxByHashResponse> getGetTxByHashMethod() {
+    io.grpc.MethodDescriptor<network.clusterone.grpc.GetTxByHashRequest, network.clusterone.grpc.GetTxByHashResponse> getGetTxByHashMethod;
+    if ((getGetTxByHashMethod = WriterServiceGrpc.getGetTxByHashMethod) == null) {
+      synchronized (WriterServiceGrpc.class) {
+        if ((getGetTxByHashMethod = WriterServiceGrpc.getGetTxByHashMethod) == null) {
+          WriterServiceGrpc.getGetTxByHashMethod = getGetTxByHashMethod =
+              io.grpc.MethodDescriptor.<network.clusterone.grpc.GetTxByHashRequest, network.clusterone.grpc.GetTxByHashResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetTxByHash"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  network.clusterone.grpc.GetTxByHashRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  network.clusterone.grpc.GetTxByHashResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new WriterServiceMethodDescriptorSupplier("GetTxByHash"))
+              .build();
+        }
+      }
+    }
+    return getGetTxByHashMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<network.clusterone.grpc.GetTxByHashRequest,
+      network.clusterone.grpc.GetTxStatusByHashResponse> getGetTxStatusByHashMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetTxStatusByHash",
+      requestType = network.clusterone.grpc.GetTxByHashRequest.class,
+      responseType = network.clusterone.grpc.GetTxStatusByHashResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<network.clusterone.grpc.GetTxByHashRequest,
+      network.clusterone.grpc.GetTxStatusByHashResponse> getGetTxStatusByHashMethod() {
+    io.grpc.MethodDescriptor<network.clusterone.grpc.GetTxByHashRequest, network.clusterone.grpc.GetTxStatusByHashResponse> getGetTxStatusByHashMethod;
+    if ((getGetTxStatusByHashMethod = WriterServiceGrpc.getGetTxStatusByHashMethod) == null) {
+      synchronized (WriterServiceGrpc.class) {
+        if ((getGetTxStatusByHashMethod = WriterServiceGrpc.getGetTxStatusByHashMethod) == null) {
+          WriterServiceGrpc.getGetTxStatusByHashMethod = getGetTxStatusByHashMethod =
+              io.grpc.MethodDescriptor.<network.clusterone.grpc.GetTxByHashRequest, network.clusterone.grpc.GetTxStatusByHashResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetTxStatusByHash"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  network.clusterone.grpc.GetTxByHashRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  network.clusterone.grpc.GetTxStatusByHashResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new WriterServiceMethodDescriptorSupplier("GetTxStatusByHash"))
+              .build();
+        }
+      }
+    }
+    return getGetTxStatusByHashMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -139,6 +201,20 @@ public final class WriterServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSendFromToMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void getTxByHash(network.clusterone.grpc.GetTxByHashRequest request,
+        io.grpc.stub.StreamObserver<network.clusterone.grpc.GetTxByHashResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetTxByHashMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void getTxStatusByHash(network.clusterone.grpc.GetTxByHashRequest request,
+        io.grpc.stub.StreamObserver<network.clusterone.grpc.GetTxStatusByHashResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetTxStatusByHashMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -155,6 +231,20 @@ public final class WriterServiceGrpc {
                 network.clusterone.grpc.SendFromToRequest,
                 network.clusterone.grpc.SendFromToReply>(
                   this, METHODID_SEND_FROM_TO)))
+          .addMethod(
+            getGetTxByHashMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                network.clusterone.grpc.GetTxByHashRequest,
+                network.clusterone.grpc.GetTxByHashResponse>(
+                  this, METHODID_GET_TX_BY_HASH)))
+          .addMethod(
+            getGetTxStatusByHashMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                network.clusterone.grpc.GetTxByHashRequest,
+                network.clusterone.grpc.GetTxStatusByHashResponse>(
+                  this, METHODID_GET_TX_STATUS_BY_HASH)))
           .build();
     }
   }
@@ -188,6 +278,22 @@ public final class WriterServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSendFromToMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void getTxByHash(network.clusterone.grpc.GetTxByHashRequest request,
+        io.grpc.stub.StreamObserver<network.clusterone.grpc.GetTxByHashResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetTxByHashMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void getTxStatusByHash(network.clusterone.grpc.GetTxByHashRequest request,
+        io.grpc.stub.StreamObserver<network.clusterone.grpc.GetTxStatusByHashResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetTxStatusByHashMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -216,6 +322,20 @@ public final class WriterServiceGrpc {
     public network.clusterone.grpc.SendFromToReply sendFromTo(network.clusterone.grpc.SendFromToRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSendFromToMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public network.clusterone.grpc.GetTxByHashResponse getTxByHash(network.clusterone.grpc.GetTxByHashRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetTxByHashMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public network.clusterone.grpc.GetTxStatusByHashResponse getTxStatusByHash(network.clusterone.grpc.GetTxByHashRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetTxStatusByHashMethod(), getCallOptions(), request);
     }
   }
 
@@ -248,10 +368,28 @@ public final class WriterServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getSendFromToMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<network.clusterone.grpc.GetTxByHashResponse> getTxByHash(
+        network.clusterone.grpc.GetTxByHashRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetTxByHashMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<network.clusterone.grpc.GetTxStatusByHashResponse> getTxStatusByHash(
+        network.clusterone.grpc.GetTxByHashRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetTxStatusByHashMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_GET_BALANCE_OF = 0;
   private static final int METHODID_SEND_FROM_TO = 1;
+  private static final int METHODID_GET_TX_BY_HASH = 2;
+  private static final int METHODID_GET_TX_STATUS_BY_HASH = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -277,6 +415,14 @@ public final class WriterServiceGrpc {
         case METHODID_SEND_FROM_TO:
           serviceImpl.sendFromTo((network.clusterone.grpc.SendFromToRequest) request,
               (io.grpc.stub.StreamObserver<network.clusterone.grpc.SendFromToReply>) responseObserver);
+          break;
+        case METHODID_GET_TX_BY_HASH:
+          serviceImpl.getTxByHash((network.clusterone.grpc.GetTxByHashRequest) request,
+              (io.grpc.stub.StreamObserver<network.clusterone.grpc.GetTxByHashResponse>) responseObserver);
+          break;
+        case METHODID_GET_TX_STATUS_BY_HASH:
+          serviceImpl.getTxStatusByHash((network.clusterone.grpc.GetTxByHashRequest) request,
+              (io.grpc.stub.StreamObserver<network.clusterone.grpc.GetTxStatusByHashResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -341,6 +487,8 @@ public final class WriterServiceGrpc {
               .setSchemaDescriptor(new WriterServiceFileDescriptorSupplier())
               .addMethod(getGetBalanceOfMethod())
               .addMethod(getSendFromToMethod())
+              .addMethod(getGetTxByHashMethod())
+              .addMethod(getGetTxStatusByHashMethod())
               .build();
         }
       }

@@ -11,6 +11,8 @@ option java_outer_classname = "WriterServiceProto";
 service WriterService {
   rpc GetBalanceOf (GetBalanceRequest) returns (GetBalanceResponse) {}
   rpc SendFromTo (SendFromToRequest) returns (SendFromToReply) {}
+  rpc GetTxByHash (GetTxByHashRequest) returns (GetTxByHashResponse) {}
+  rpc GetTxStatusByHash (GetTxByHashRequest) returns (GetTxStatusByHashResponse) {}
 }
 
 message GetBalanceRequest {
@@ -33,5 +35,21 @@ message SendFromToRequest {
 
 message SendFromToReply {
   string tx_hash = 1;
+  string error = 2;
+}
+
+message GetTxByHashRequest {
+  string symbol = 1;
+  string tx_hash = 2;
+}
+
+message GetTxByHashResponse {
+  bytes data = 1;
+  bool pending = 2;
+  string error = 3;
+}
+
+message GetTxStatusByHashResponse {
+  string status = 1;
   string error = 2;
 }

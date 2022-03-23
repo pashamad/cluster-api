@@ -2,12 +2,15 @@ package network.clusterone.api.services.account
 
 import kotlinx.coroutines.runBlocking
 import network.clusterone.api.domain.KeyStore
+import network.clusterone.api.domain.Transaction
 import network.clusterone.api.grpc.writer.WriterGrpcClient
 import network.clusterone.api.repository.AccountRepository
 import network.clusterone.api.repository.KeystoreRepository
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 import java.math.BigDecimal
 import java.security.Principal
 import java.util.*
@@ -17,7 +20,8 @@ class SenderService(
     val logger: Logger,
     val accountRepository: AccountRepository,
     val keystoreRepository: KeystoreRepository,
-    val writerGrpcClient: WriterGrpcClient
+    val writerGrpcClient: WriterGrpcClient,
+    val txService: TransactionsService
 ) {
 
     suspend fun sendFromToBlocking(key: KeyStore, to: String, amount: BigDecimal): String {
@@ -38,7 +42,7 @@ class SenderService(
         key: String,
         amount: BigDecimal
     ): String {
-        logger.info("send: ${network}, ${address}, $to, ${key}, ${amount.toLong()}")
+        logger.info("send: $network, $address, $to, $key, $amount")
         return writerGrpcClient.sendFromTo(
             network,
             address,
@@ -48,7 +52,7 @@ class SenderService(
         )
     }
 
-    fun sendFromTo(principal: Principal, id: String, to: String, amount: BigDecimal): Mono<String> {
+    fun sendFromTo(principal: Principal, id: String, to: String, amount: BigDecimal): Mono<Transaction> {
         // security check
         val account = accountRepository.findByEmailAndId(principal.name, UUID.fromString(id))
 
@@ -59,21 +63,23 @@ class SenderService(
             keystoreRepository.findByIdAndUser(it.keystore_id, it.user_id)
         }
 
-        return key.flatMap {
-            // runBlocking { writerGrpcClient.sendFromTo(it?.network!!, it.address, to, it.privateKey!!, amount) }
-            Mono.just(runBlocking {
-                sendFromToBlocking(it!!, to, amount)
-            })
-//            Mono.just(runBlocking {
-//                logger.info("send: $it?.network!!, $it.address, $to, $it.privateKey!!, $amount")
-//                sendFromToBlocking(
-//                    it?.network!!,
-//                    it.address,
-//                    to,
-//                    it.privateKey!!,
-//                    amount
-//                )
-//            })
+        // tx hash
+        val txHash = key.map {
+            runBlocking { sendFromToBlocking(it!!, to, amount) }
         }
+
+        // tx
+        val tx = Flux.zip(account, txHash).flatMap {
+            val hash = it.t2
+            txService.getTransactionsByAccount(it.t1, 0, 10)
+                .collectList()
+                .mapNotNull { txList ->
+                    txList.firstOrNull { t -> t.hash == hash }
+                }
+        }
+            .toMono()
+            .map { it!! }
+
+        return tx
     }
 }

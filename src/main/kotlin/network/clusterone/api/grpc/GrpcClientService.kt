@@ -11,15 +11,17 @@ data class GrpcServiceDesc(
 )
 
 enum class GrpcServiceId {
-    ACCOUNT, WRITER
+    ACCOUNT, WRITER, ETH_LISTENER, SOL_LISTENER
 }
 
 @Service
 class GrpcClientService {
 
     private val services = mapOf(
-        GrpcServiceId.ACCOUNT to GrpcServiceDesc("134.209.133.17", 11223),
-        GrpcServiceId.WRITER to GrpcServiceDesc("188.166.200.239", 11334),
+        GrpcServiceId.ACCOUNT to GrpcServiceDesc("cluster-account.backend.svc.cluster.local", 11223),
+        GrpcServiceId.WRITER to GrpcServiceDesc("cluster-writer.backend.svc.cluster.local", 11334),
+        GrpcServiceId.ETH_LISTENER to GrpcServiceDesc("cluster-eth-listener.backend.svc.cluster.local", 11445),
+        GrpcServiceId.SOL_LISTENER to GrpcServiceDesc("cluster-sol-listener.backend.svc.cluster.local", 11446),
     )
 
     private val channels = EnumMap<GrpcServiceId, ManagedChannel>(GrpcServiceId::class.java)

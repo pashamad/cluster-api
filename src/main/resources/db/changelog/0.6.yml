@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0.6
+      author: pm
+      changes:
+        - createTable:
+            tableName: transaction
+            columns:
+              - column:
+                  name: id
+                  type: ${uuidType}
+                  defaultValueComputed: ${uuidFunction}
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: type
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: asset
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: hash
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_addr
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_addr
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: confirmed_at
+                  type: timestamp
+              - column:
+                  name: account_id
+                  type: ${uuidType}
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_transaction_account
+                    references: account(id)
+              - column:
+                  name: user_id
+                  type: ${uuidType}
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_transaction_user
+                    references: users(id)

@@ -3,9 +3,7 @@ package network.clusterone.api.grpc.writer
 import io.grpc.Metadata
 import network.clusterone.api.grpc.GrpcClientService
 import network.clusterone.api.grpc.GrpcServiceId
-import network.clusterone.grpc.GetBalanceRequest
-import network.clusterone.grpc.SendFromToRequest
-import network.clusterone.grpc.WriterServiceGrpcKt
+import network.clusterone.grpc.*
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
@@ -22,7 +20,7 @@ class WriterGrpcClient(
             .setFromAddr(from)
             .setToAddr(to)
             .setFromPrivate(privateKey)
-            .setAmount(amount.toLong().toString())
+            .setAmount(amount.toString())
             .build()
         val response = stub.sendFromTo(request, Metadata())
 
@@ -35,7 +33,15 @@ class WriterGrpcClient(
             .setAddress(address)
             .build()
         val response = stub.getBalanceOf(request, Metadata())
-        val d = response.amount.toDouble()
-        return BigDecimal(d)
+        return response.amount.toBigDecimal()
+    }
+
+    suspend fun getTxStatus(net: String, hash: String): String {
+        val request = GetTxByHashRequest.newBuilder()
+            .setSymbol(net)
+            .setTxHash(hash)
+            .build()
+        val response = stub.getTxStatusByHash(request, Metadata())
+        return response.status.toString()
     }
 }

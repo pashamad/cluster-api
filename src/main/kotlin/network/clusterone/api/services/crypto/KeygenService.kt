@@ -33,13 +33,10 @@ class DerivePath {
 
     fun getPath(type: CoinType, acc: Int, index: Int): String {
         val purpose = coinPurpose[type]
-        val typeId = coinTypeId[type]
+        val coinId = coinTypeId[type]
 
-        // we must use hardened derivation for both account type and index
-        // val t = if (type == CoinType.SOL) "'" else ""
-        // var path = "m/$purpose'/$typeId'/$acc'/0$t/$index"
-        var path = "m/$purpose'/$typeId'/$acc'"
-        // to be compatible with trust wallet, we will not append account type and index to solana path
+        var path = "m/$purpose'/$coinId'/$acc'"
+        // to be compatible with other wallets, we will not append account type and index to solana path
         if (type !== CoinType.SOL) {
             path += "/0/$index"
         }

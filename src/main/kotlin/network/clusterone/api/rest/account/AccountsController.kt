@@ -2,8 +2,10 @@ package network.clusterone.api.rest.account
 
 import io.swagger.v3.oas.annotations.tags.Tag
 import network.clusterone.api.domain.Account
+import network.clusterone.api.domain.Transaction
 import network.clusterone.api.services.account.AccountService
 import network.clusterone.api.services.account.PatchAccountRequest
+import network.clusterone.api.services.account.TransactionsService
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -16,7 +18,8 @@ import java.util.*
 @RequestMapping("/accounts")
 @Tag(name = "accounts")
 class AccountsController(
-    val accountService: AccountService
+    val accountService: AccountService,
+    val transactionsService: TransactionsService
 ) {
 
     @GetMapping(value = [""])
@@ -31,5 +34,20 @@ class AccountsController(
         @RequestBody request: PatchAccountRequest
     ): Mono<Account> {
         return accountService.patchAccount(principal, id, request)
+    }
+
+    @PostMapping(value = ["/{id}/activate"])
+    fun activateAccount(principal: Principal, @PathVariable id: String): Mono<Boolean> {
+        return accountService.activateAccount(principal, UUID.fromString(id))
+    }
+
+    @GetMapping(value = ["/{id}/transactions"])
+    fun getAccountTransactions(
+        principal: Principal,
+        @PathVariable id: String,
+        @RequestParam from: Int = 0,
+        @RequestParam limit: Int = 20
+    ): Flux<Transaction> {
+        return transactionsService.getTransactionsByAccount(principal, UUID.fromString(id), from, limit)
     }
 }

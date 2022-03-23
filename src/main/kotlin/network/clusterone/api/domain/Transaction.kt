@@ -17,29 +17,49 @@ class Transaction(
     var id: UUID? = null,
 
     @field:NotNull
-    var type: String? = null,
+    var type: String,
 
     @field:NotNull
-    var asset: String? = null,
+    var asset: String,
 
     @field:NotNull
-    var amount: BigDecimal? = null,
+    var hash: String,
 
     @field:NotNull
-    var from: String? = null,
+    var amount: BigDecimal,
+
+    @Column(name = "from_addr")
+    @field:NotNull
+    var fromAddr: String,
+
+    @Column(name = "to_addr")
+    @field:NotNull
+    var toAddr: String,
 
     @field:NotNull
-    var to: String? = null,
+    var status: String,
 
+    @Column(name = "created_at", updatable = false)
     @field:NotNull
-    var status: String? = null,
-
-    @Column(name = "sent_at", updatable = false)
-    @field:NotNull
-    var sentAt: Instant? = Instant.now(),
+    var createdAt: Instant = Instant.now(),
 
     @Column(name = "confirmed_at", updatable = false)
     var confirmedAt: Instant? = null,
 
-    ): AbstractAuditingEntity() {
-}
+    @field: NotNull
+    var account_id: UUID,
+
+    @field: NotNull
+    var user_id: UUID,
+
+//    @ManyToOne
+//    @JoinColumn(name = "account_id", referencedColumnName = "id")
+//    @JsonIgnore
+//    var account: Account? = null,
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    @JsonIgnore
+//    var user: User? = null,
+
+    ) {}

@@ -34,6 +34,21 @@ public final class WriterServiceProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_writer_SendFromToReply_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_writer_GetTxByHashRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_writer_GetTxByHashRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_writer_GetTxByHashResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_writer_GetTxByHashResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_writer_GetTxStatusByHashResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_writer_GetTxStatusByHashResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -50,13 +65,21 @@ public final class WriterServiceProto {
       "equest\022\016\n\006symbol\030\001 \001(\t\022\021\n\tfrom_addr\030\002 \001(" +
       "\t\022\017\n\007to_addr\030\003 \001(\t\022\024\n\014from_private\030\004 \001(\t" +
       "\022\016\n\006amount\030\005 \001(\t\"1\n\017SendFromToReply\022\017\n\007t" +
-      "x_hash\030\001 \001(\t\022\r\n\005error\030\002 \001(\t2\234\001\n\rWriterSe" +
-      "rvice\022G\n\014GetBalanceOf\022\031.writer.GetBalanc" +
-      "eRequest\032\032.writer.GetBalanceResponse\"\000\022B" +
-      "\n\nSendFromTo\022\031.writer.SendFromToRequest\032" +
-      "\027.writer.SendFromToReply\"\000B9\n\027network.cl" +
-      "usterone.grpcB\022WriterServiceProtoP\001Z\010./w" +
-      "riterb\006proto3"
+      "x_hash\030\001 \001(\t\022\r\n\005error\030\002 \001(\t\"5\n\022GetTxByHa" +
+      "shRequest\022\016\n\006symbol\030\001 \001(\t\022\017\n\007tx_hash\030\002 \001" +
+      "(\t\"C\n\023GetTxByHashResponse\022\014\n\004data\030\001 \001(\014\022" +
+      "\017\n\007pending\030\002 \001(\010\022\r\n\005error\030\003 \001(\t\":\n\031GetTx" +
+      "StatusByHashResponse\022\016\n\006status\030\001 \001(\t\022\r\n\005" +
+      "error\030\002 \001(\t2\274\002\n\rWriterService\022G\n\014GetBala" +
+      "nceOf\022\031.writer.GetBalanceRequest\032\032.write" +
+      "r.GetBalanceResponse\"\000\022B\n\nSendFromTo\022\031.w" +
+      "riter.SendFromToRequest\032\027.writer.SendFro" +
+      "mToReply\"\000\022H\n\013GetTxByHash\022\032.writer.GetTx" +
+      "ByHashRequest\032\033.writer.GetTxByHashRespon" +
+      "se\"\000\022T\n\021GetTxStatusByHash\022\032.writer.GetTx" +
+      "ByHashRequest\032!.writer.GetTxStatusByHash" +
+      "Response\"\000B9\n\027network.clusterone.grpcB\022W" +
+      "riterServiceProtoP\001Z\010./writerb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -86,6 +109,24 @@ public final class WriterServiceProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_writer_SendFromToReply_descriptor,
         new java.lang.String[] { "TxHash", "Error", });
+    internal_static_writer_GetTxByHashRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_writer_GetTxByHashRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_writer_GetTxByHashRequest_descriptor,
+        new java.lang.String[] { "Symbol", "TxHash", });
+    internal_static_writer_GetTxByHashResponse_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_writer_GetTxByHashResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_writer_GetTxByHashResponse_descriptor,
+        new java.lang.String[] { "Data", "Pending", "Error", });
+    internal_static_writer_GetTxStatusByHashResponse_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_writer_GetTxStatusByHashResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_writer_GetTxStatusByHashResponse_descriptor,
+        new java.lang.String[] { "Status", "Error", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

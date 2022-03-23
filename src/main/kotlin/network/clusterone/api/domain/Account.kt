@@ -31,20 +31,20 @@ class Account(
         example = "eth", required = true
     )
     @field: NotNull
-    var network: String? = null,
+    var network: String,
 
     @Schema(
         description = "Account address.",
         required = true
     )
     @field: NotNull
-    var address: String? = null,
+    var address: String,
 
     @Schema(
         description = "Amount of coins on the account. Maximum precision is defined by a network.",
         example = "123.4567890", required = true
     )
-    var balance: BigDecimal? = BigDecimal(0),
+    var balance: BigDecimal = BigDecimal(0),
 
     @Schema(
         description = "Account owner ID",

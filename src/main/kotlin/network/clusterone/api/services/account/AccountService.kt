@@ -3,6 +3,7 @@ package network.clusterone.api.services.account
 import kotlinx.coroutines.runBlocking
 import network.clusterone.api.domain.Account
 import network.clusterone.api.domain.KeyStore
+import network.clusterone.api.grpc.listener.ListenerGrpcClient
 import network.clusterone.api.grpc.writer.WriterGrpcClient
 import network.clusterone.api.repository.AccountRepository
 import network.clusterone.api.security.UserDetailsResolverService
@@ -25,7 +26,8 @@ class AccountService(
     val logger: Logger,
     val repo: AccountRepository,
     val userDetails: UserDetailsResolverService,
-    val grpc: WriterGrpcClient
+    val writer: WriterGrpcClient,
+    val listener: ListenerGrpcClient
 ) {
 
     fun createAccountFromKey(key: KeyStore, name: String, principal: Principal): Mono<Account> {
@@ -50,8 +52,15 @@ class AccountService(
     fun getBalanceOf(account: Account): Mono<BigDecimal> {
         return Mono.just(BigDecimal.ZERO)
             .map {
-                runBlocking { grpc.getBalanceOf(account.network!!, account.address!!) }
+                runBlocking { writer.getBalanceOf(account.network, account.address) }
             }
+    }
+
+    fun activateAccount(principal: Principal, accId: UUID): Mono<Boolean> {
+        val acc = repo.findByEmailAndId(principal.name, accId)
+        return acc.map {
+            runBlocking { listener.addAddress(it?.network!!, it.address, accId) }
+        }
     }
 
     private fun updateAccountBalance(account: Account): Mono<Account> {

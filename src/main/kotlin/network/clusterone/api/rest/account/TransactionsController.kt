@@ -2,20 +2,21 @@ package network.clusterone.api.rest.account
 
 import io.swagger.v3.oas.annotations.tags.Tag
 import network.clusterone.api.domain.Transaction
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Flux
+import network.clusterone.api.services.account.TransactionsService
+import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Mono
 import java.security.Principal
+import java.util.*
 
 @RestController
-@RequestMapping("/accounts")
-@Tag(name = "accounts")
-class TransactionsController {
+@RequestMapping("/transactions")
+@Tag(name = "transactions")
+class TransactionsController(
+    val transactionsService: TransactionsService
+) {
 
-    @GetMapping(value = ["/{id}/transactions"])
-    fun getAccountTransactions(principal: Principal, @PathVariable id: String): Flux<Transaction> {
-        return Flux.empty()
+    @GetMapping(value = ["/{id}"])
+    fun getTransactionById(principal: Principal, @PathVariable id: UUID): Mono<Transaction?> {
+        return transactionsService.getTransactionById(principal, id)
     }
 }
