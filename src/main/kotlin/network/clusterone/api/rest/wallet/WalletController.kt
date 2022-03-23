@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import network.clusterone.api.domain.Account
 import network.clusterone.api.domain.Wallet
+import network.clusterone.api.services.account.AccountInitService
 import network.clusterone.api.services.wallet.AccountFromMnemonicRequest
+import network.clusterone.api.services.wallet.AccountFromSeedRequest
 import network.clusterone.api.services.wallet.WalletService
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
@@ -17,7 +19,8 @@ import java.security.Principal
 @RequestMapping("/wallet")
 @Tag(name = "wallet", description = "Top-level wallet operations")
 class WalletController(
-    val walletService: WalletService
+    val walletService: WalletService,
+    val accountInit: AccountInitService
 ) {
 
     @GetMapping(value = [""])
@@ -68,5 +71,21 @@ class WalletController(
         @RequestBody request: AccountFromMnemonicRequest
     ): Mono<Account> {
         return walletService.createAccountFromMnemonic(request, principal)
+            .map { acc ->
+                accountInit.activateAccountAsync(principal, acc.id!!);
+                acc
+            }
+    }
+
+    @PostMapping(value = ["accountFromSeed"])
+    fun createAccountFromSeed(
+        principal: Principal,
+        @RequestBody request: AccountFromSeedRequest
+    ): Mono<Account> {
+        return walletService.createAccountFromSeed(request, principal)
+            .map { acc ->
+                accountInit.activateAccountAsync(principal, acc.id!!);
+                acc
+            }
     }
 }

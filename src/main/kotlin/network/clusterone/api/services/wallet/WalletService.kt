@@ -5,12 +5,14 @@ import kotlinx.coroutines.runBlocking
 import network.clusterone.api.domain.Account
 import network.clusterone.api.services.account.AccountService
 import network.clusterone.api.services.crypto.KeygenService
+import network.clusterone.api.services.crypto.MnemonicService
 import network.clusterone.api.services.keychain.KeyData
 import network.clusterone.api.services.keychain.UserKeysService
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import java.security.Principal
+import java.util.*
 
 data class AccountFromMnemonicRequest(
     @Schema(
@@ -35,12 +37,20 @@ data class AccountFromMnemonicRequest(
     val password: String?
 )
 
+data class AccountFromSeedRequest(
+
+    val mnemonicId: UUID,
+    val network: String,
+    val name: String?
+)
+
 @Service
 class WalletService(
     val logger: Logger,
     val keygen: KeygenService,
     val keysService: UserKeysService,
-    val accountService: AccountService
+    val accountService: AccountService,
+    val mnemonicService: MnemonicService
 ) {
 
     fun createAccountFromMnemonic(request: AccountFromMnemonicRequest, principal: Principal): Mono<Account> {
@@ -53,5 +63,20 @@ class WalletService(
             accountService.createAccountFromKey(it, request.name, principal)
         }
         return account
+    }
+
+    fun createAccountFromSeed(request: AccountFromSeedRequest, principal: Principal): Mono<Account> {
+        return mnemonicService.getById(request.mnemonicId)
+            .map {
+                val name = request.name ?: (it.name + request.network.uppercase())
+                val data = runBlocking { keygen.getAccountData(request.network, it.seed) }
+                KeyData(request.network, data.path, data.address, data.publicKey, data.privateKey, name, it.id)
+            }
+            .flatMap { data ->
+                keysService.addUserKey(data, principal)
+                    .flatMap {
+                        accountService.createAccountFromKey(it, data.name!!, principal)
+                    }
+            }
     }
 }

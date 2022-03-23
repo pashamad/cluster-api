@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
-import network.clusterone.api.services.crypto.Mnemonic
+import network.clusterone.api.services.crypto.MnemonicPhrase
 import network.clusterone.api.services.crypto.MnemonicService
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
@@ -43,7 +43,7 @@ class MnemonicController(
             ApiResponse(
                 responseCode = "200",
                 description = "Successful operation",
-                content = [Content(schema = Schema(implementation = Mnemonic::class), mediaType = "application/json")]
+                content = [Content(schema = Schema(implementation = MnemonicPhrase::class), mediaType = "application/json")]
             ),
             ApiResponse(
                 responseCode = "400",
@@ -66,7 +66,7 @@ class MnemonicController(
     fun generateGrpc(
         @RequestParam("count", required = false, defaultValue = "12") count: Int,
         @RequestParam(name = "lang", required = false, defaultValue = "en") lang: String
-    ): Mono<Mnemonic> {
+    ): Mono<MnemonicPhrase> {
         return Mono.just(runBlocking { mnemonicService.generate() })
     }
 }

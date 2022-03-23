@@ -25,6 +25,7 @@ open class Mnemonic(
     @field: NotNull
     var lang: String,
 
+    @JsonIgnore
     @field: NotNull
     var seed: String,
 

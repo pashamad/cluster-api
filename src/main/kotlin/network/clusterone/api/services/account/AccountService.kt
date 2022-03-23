@@ -56,13 +56,6 @@ class AccountService(
             }
     }
 
-    fun activateAccount(principal: Principal, accId: UUID): Mono<Boolean> {
-        val acc = repo.findByEmailAndId(principal.name, accId)
-        return acc.map {
-            runBlocking { listener.addAddress(it?.network!!, it.address, accId) }
-        }
-    }
-
     private fun updateAccountBalance(account: Account): Mono<Account> {
         return getBalanceOf(account).flatMap {
             account.balance = it

@@ -3,6 +3,7 @@ package network.clusterone.api.rest.account
 import io.swagger.v3.oas.annotations.tags.Tag
 import network.clusterone.api.domain.Account
 import network.clusterone.api.domain.Transaction
+import network.clusterone.api.services.account.AccountInitService
 import network.clusterone.api.services.account.AccountService
 import network.clusterone.api.services.account.PatchAccountRequest
 import network.clusterone.api.services.account.TransactionsService
@@ -13,12 +14,12 @@ import java.security.Principal
 import java.util.*
 
 
-
 @RestController
 @RequestMapping("/accounts")
 @Tag(name = "accounts")
 class AccountsController(
     val accountService: AccountService,
+    val accountInit: AccountInitService,
     val transactionsService: TransactionsService
 ) {
 
@@ -38,7 +39,7 @@ class AccountsController(
 
     @PostMapping(value = ["/{id}/activate"])
     fun activateAccount(principal: Principal, @PathVariable id: String): Mono<Boolean> {
-        return accountService.activateAccount(principal, UUID.fromString(id))
+        return accountInit.activateAccount(principal, UUID.fromString(id))
     }
 
     @GetMapping(value = ["/{id}/transactions"])
