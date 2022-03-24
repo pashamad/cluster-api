@@ -46,8 +46,8 @@ class AccountsController(
     fun getAccountTransactions(
         principal: Principal,
         @PathVariable id: String,
-        @RequestParam from: Int = 0,
-        @RequestParam limit: Int = 20
+        @RequestParam("from", required = false, defaultValue = "0") from: Int,
+        @RequestParam("limit", required = false, defaultValue = "20") limit: Int
     ): Flux<Transaction> {
         return transactionsService.getTransactionsByAccount(principal, UUID.fromString(id), from, limit)
     }
