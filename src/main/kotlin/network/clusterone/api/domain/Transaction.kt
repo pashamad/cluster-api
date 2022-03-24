@@ -28,6 +28,9 @@ class Transaction(
     @field:NotNull
     var amount: BigDecimal,
 
+    @field:NotNull
+    var fee: BigDecimal,
+
     @Column(name = "from_addr")
     @field:NotNull
     var fromAddr: String,
@@ -38,6 +41,9 @@ class Transaction(
 
     @field:NotNull
     var status: String,
+
+    @field: NotNull
+    var explorer: String,
 
     @Column(name = "created_at", updatable = false)
     @field:NotNull
@@ -62,4 +68,4 @@ class Transaction(
 //    @JsonIgnore
 //    var user: User? = null,
 
-    ) {}
+) {}

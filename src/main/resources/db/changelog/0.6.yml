@@ -33,6 +33,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: fee
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
                   name: from_addr
                   type: text
                   constraints:
@@ -44,6 +49,11 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: status
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: explorer
                   type: text
                   constraints:
                     nullable: false

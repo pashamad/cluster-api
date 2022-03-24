@@ -7,6 +7,7 @@ import network.clusterone.api.grpc.listener.ListenerGrpcClient
 import network.clusterone.api.grpc.writer.WriterGrpcClient
 import network.clusterone.api.repository.AccountRepository
 import network.clusterone.api.repository.TransactionRepository
+import network.clusterone.api.services.tx.ExplorerLinkMapper
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -21,7 +22,8 @@ class TransactionsService(
     val accountRepository: AccountRepository,
     val txRepository: TransactionRepository,
     val listener: ListenerGrpcClient,
-    val writer: WriterGrpcClient
+    val writer: WriterGrpcClient,
+    val explorer: ExplorerLinkMapper
 ) {
 
     fun getTransactionsByAccount(principal: Principal, accId: UUID, from: Int, limit: Int): Flux<Transaction> {
@@ -54,16 +56,18 @@ class TransactionsService(
         acc: Account
     ): Transaction {
         val type = if (acc.address.compareTo(tx.fromAddr) == 0) "send" else "receive"
-        val createdAt = Instant.ofEpochSecond(tx.createdAt) // TODO: MAP FEE!
+        val createdAt = Instant.ofEpochSecond(tx.createdAt)
         return Transaction(
             null,
             type,
             acc.network,
             tx.txHash,
             tx.amount.toBigDecimal(),
+            tx.fee.toBigDecimal(),
             tx.fromAddr,
             tx.toAddr,
             tx.status.toString(),
+            explorer.getExplorerLink(tx.txHash, acc.network, "testnet"), // TODO: get network type from configuration
             createdAt, createdAt,
             acc.id!!,
             acc.user_id,
@@ -93,6 +97,7 @@ class TransactionsService(
         return if (tx == null) txRepository.save(mapTransaction(src, acc))
         else if (src.status.toString() != tx.status) {
             tx.status = src.status.toString()
+            tx.fee = src.fee.toBigDecimal()
             txRepository.save(tx)
         } else Mono.just(tx)
     }
