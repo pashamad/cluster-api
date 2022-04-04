@@ -8,7 +8,6 @@ import com.sendgrid.helpers.mail.Mail
 import com.sendgrid.helpers.mail.objects.Content
 import com.sendgrid.helpers.mail.objects.Email
 import com.sendgrid.helpers.mail.objects.Personalization
-import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
@@ -30,24 +29,26 @@ class SendgridService(
     val sendGrid = SendGrid(apiKey)
 
     fun sendMailTemplate(data: SendMailTemplateData): Mono<Int> {
-        val from = Email("pashamad@gmail.com")
+        val from = Email("no-reply@pes.dev", "ClusterOne Team")
         val to = Email(data.to)
 
-        val mail = Mail(from, data.subject, to, Content())
+        val mail = Mail()
+        mail.from = from
         mail.templateId = data.templateId
 
         val personalization = Personalization()
+        personalization.addTo(to)
         data.params.forEach { (key, value) ->
             personalization.addDynamicTemplateData(key, value)
         }
-        mail.personalization.add(personalization)
+        mail.addPersonalization(personalization)
 
         val request = Request()
         request.method = Method.POST
         request.baseUri = "v3/"
         request.endpoint = "mail/send"
         request.body = mail.build()
-        val response: Response = runBlocking { sendGrid.api(request) }
+        val response: Response = sendGrid.api(request)
         // todo: check response status
         logger.info(response.toString())
 

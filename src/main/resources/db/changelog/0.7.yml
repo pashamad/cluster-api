@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0.7
+      author: pm
+      changes:
+        - createTable:
+            tableName: verify_email_session
+            columns:
+              - column:
+                  name: id
+                  type: ${uuidType}
+                  defaultValueComputed: ${uuidFunction}
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: code
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: valid_till
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: ${uuidType}
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_verify_email_user
+                    references: users(id)

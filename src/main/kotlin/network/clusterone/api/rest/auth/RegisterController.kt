@@ -2,14 +2,13 @@ package network.clusterone.api.rest.auth
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
-import network.clusterone.api.domain.User
 import network.clusterone.api.security.JwtSigner
 import network.clusterone.api.security.UserDetailsResolverService
 import network.clusterone.api.services.auth.RegistrationService
-import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
+import java.time.Instant
 
 data class UserCredentials(val email: String, val password: String)
 data class UserActivation(val email: String, val code: String)
@@ -33,7 +32,7 @@ class RegisterController(
     @PostMapping("/email")
     fun register(@RequestBody credentials: UserCredentials): Mono<ResponseEntity<String>> {
         return registrationService.registerByEmail(credentials)
-            // todo: send verification code
+            .flatMap { registrationService.sendVerifyEmail(it) }
             .mapNotNull { jwtSigner.createJwt(it.email!!) }
             .map { ResponseEntity.ok(it) }
     }
@@ -41,10 +40,14 @@ class RegisterController(
     @PostMapping("/email/activate")
     fun activateEmail(@RequestBody activation: UserActivation): Mono<ResponseEntity<String>> {
         return userResolver.findByUsername(activation.email)
-            // @todo code verification
-            .mapNotNull { if (activation.code == "4444") it else null }
-            .flatMap { registrationService.activateByEmail(it!!.username) }
-            .mapNotNull { jwtSigner.createJwt(activation.email) } // @todo get from reactive chain
-            .map { ResponseEntity.ok(it) }
+            .flatMap { registrationService.getVerifyEmailSession(activation.email, activation.code) }
+            .flatMap {
+                if (Instant.now() > it!!.validTill) {
+                    error(Error("Invalid code"))
+                } else {
+                    registrationService.activateByEmail(activation.email)
+                }
+            }
+            .map { ResponseEntity.ok(jwtSigner.createJwt(activation.email)) }
     }
 }
