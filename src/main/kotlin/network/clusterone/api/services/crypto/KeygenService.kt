@@ -13,10 +13,16 @@ enum class CoinType {
 
 class DerivePath {
 
-    val coinName = mapOf(
+    val netName = mapOf(
         CoinType.BTC to "btc",
         CoinType.ETH to "eth",
         CoinType.SOL to "sol"
+    )
+
+    val coinName = mapOf(
+        CoinType.BTC to "BTC",
+        CoinType.ETH to "ETH",
+        CoinType.SOL to "SOL"
     )
 
     private val coinPurpose = mapOf(
@@ -66,7 +72,7 @@ class KeygenService(
         val coin = CoinType.valueOf(net.uppercase())
         val path = derivePath.getPath(coin, acc ?: 0, index ?: 0)
         logger.info("Deriving account data from seed $seed, for network $net and path $path")
-        val data = keygenGrpcClient.getAccountData(net, seed, path)
+        val data = keygenGrpcClient.getAccountData(coin.toString(), seed, path)
         logger.info("Generated account data: $data")
 
         return data
@@ -76,7 +82,7 @@ class KeygenService(
         val coin = CoinType.valueOf(net.uppercase())
         val path = derivePath.getPath(coin, acc ?: 0, index ?: 0)
         logger.info("Deriving account public address from seed $seed, for network $net and path $path")
-        val key = keygenGrpcClient.getPublicKey(net, seed, path)
+        val key = keygenGrpcClient.getPublicKey(coin.toString(), seed, path)
         logger.info("Derived account public address: $key")
 
         return key

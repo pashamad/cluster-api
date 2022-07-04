@@ -2,7 +2,7 @@ package network.clusterone.api.services.keychain
 
 import network.clusterone.api.domain.KeyStore
 import network.clusterone.api.repository.KeystoreRepository
-import network.clusterone.api.security.UserDetailsResolverService
+import network.clusterone.api.security.UserResolverService
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -28,7 +28,7 @@ data class KeyPatch(
 class UserKeysService(
     val logger: Logger,
     val repo: KeystoreRepository,
-    val userDetails: UserDetailsResolverService
+    val userDetails: UserResolverService
 ) {
 
     fun addUserKey(data: KeyData, principal: Principal): Mono<KeyStore> {

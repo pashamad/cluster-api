@@ -21,7 +21,7 @@ class AccountInitService(
     fun activateAccountAsync(principal: Principal, accId: UUID) {
         val acc = repo.findByEmailAndId(principal.name, accId)
         acc.map {
-            logger.info("Activating account ${it!!.id} (addr: ${it.address}")
+            logger.info("Activating account ${it!!.id} (addr: ${it.address})")
             runBlocking { listener.addAddress(it.network, it.address, accId) }
         }
             .subscribe()

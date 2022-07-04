@@ -49,9 +49,9 @@ class SendgridService(
         request.endpoint = "mail/send"
         request.body = mail.build()
         val response: Response = sendGrid.api(request)
-        // todo: check response status
-        logger.info(response.toString())
+        logger.info("$response; code ${response.statusCode}")
 
+        // todo: check response status
         return Mono.just(response.statusCode)
     }
 

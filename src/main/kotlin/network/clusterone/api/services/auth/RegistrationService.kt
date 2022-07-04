@@ -43,9 +43,10 @@ class RegistrationService(
     fun activateByEmail(email: String): Mono<User> {
         return userRepository.findOneByEmail(email)
             .switchIfEmpty(Mono.error { Exception("User not found") })
+            .mapNotNull{ it!! }
             .map {
-                logger.info("Activating user ${it?.id}")
-                it!!.activated = true
+                logger.info("Activating user ${it.id}")
+                it.activated = true
                 it.authorities = "ROLE_USER"
                 it
             }

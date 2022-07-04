@@ -18,7 +18,7 @@ import org.springframework.security.web.server.context.NoOpServerSecurityContext
 
 @Configuration
 class SecurityConfiguration(
-    val userDetailsService: UserDetailsResolverService
+    val userDetailsService: UserResolverService
 ) {
 
     @Bean
@@ -49,9 +49,8 @@ class SecurityConfiguration(
             .anyExchange().authenticated()
             .and()
             .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
-            .exceptionHandling()
-            .authenticationEntryPoint(AuthEntryPoint())
-            .accessDeniedHandler(AuthAccessDeniedHandler())
+            // .exceptionHandling()
+            // .authenticationEntryPoint(AuthEntryPoint())
 
         return http.build()
     }

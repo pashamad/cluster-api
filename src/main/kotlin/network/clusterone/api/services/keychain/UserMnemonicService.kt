@@ -3,7 +3,7 @@ package network.clusterone.api.services.keychain
 import kotlinx.coroutines.runBlocking
 import network.clusterone.api.domain.Mnemonic
 import network.clusterone.api.repository.MnemonicRepository
-import network.clusterone.api.security.UserDetailsResolverService
+import network.clusterone.api.security.UserResolverService
 import network.clusterone.api.services.crypto.KeygenService
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
@@ -16,7 +16,7 @@ class UserMnemonicService(
     val logger: Logger,
     val repo: MnemonicRepository,
     val keygen: KeygenService,
-    val userDetails: UserDetailsResolverService
+    val userDetails: UserResolverService
 ) {
 
     fun addUserMnemonic(phrase: String, name: String?, principal: Principal): Mono<Mnemonic> {

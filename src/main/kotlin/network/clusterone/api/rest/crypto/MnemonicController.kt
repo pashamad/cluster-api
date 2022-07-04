@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.runBlocking
 import network.clusterone.api.services.crypto.MnemonicPhrase
 import network.clusterone.api.services.crypto.MnemonicService
+import network.clusterone.grpc.service.account.WordLang
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 
@@ -29,13 +30,13 @@ class MnemonicController(
             Parameter(
                 name = "count",
                 `in` = ParameterIn.QUERY,
-                description = "Mnemonic words count. Must be divisible by 3 and in range from 12 to 24",
+                description = "Mnemonic words count. Must be a multiple of 3 and in range from 12 to 24",
                 required = false
             ),
             Parameter(
                 name = "lang",
                 `in` = ParameterIn.QUERY,
-                description = "Mnemonic language. Valid options are: [en, fr, it, es, cz, jp]",
+                description = "Mnemonic language. Valid options are: [en, fr, it, es, cz, jp, ko, zh]",
                 required = false
             )
         ],
@@ -43,7 +44,10 @@ class MnemonicController(
             ApiResponse(
                 responseCode = "200",
                 description = "Successful operation",
-                content = [Content(schema = Schema(implementation = MnemonicPhrase::class), mediaType = "application/json")]
+                content = [Content(
+                    schema = Schema(implementation = MnemonicPhrase::class),
+                    mediaType = "application/json"
+                )]
             ),
             ApiResponse(
                 responseCode = "400",
@@ -67,6 +71,6 @@ class MnemonicController(
         @RequestParam("count", required = false, defaultValue = "12") count: Int,
         @RequestParam(name = "lang", required = false, defaultValue = "en") lang: String
     ): Mono<MnemonicPhrase> {
-        return Mono.just(runBlocking { mnemonicService.generate() })
+        return mnemonicService.generate(count, lang)
     }
 }

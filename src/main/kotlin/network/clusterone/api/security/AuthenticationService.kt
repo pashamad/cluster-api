@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono
 
 @Service
 class AuthenticationService(
-    val userResolver: UserDetailsResolverService,
+    val userResolver: UserResolverService,
     val passwordEncoder: PasswordEncoder
 ) {
 

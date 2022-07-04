@@ -3,10 +3,10 @@ package network.clusterone.api.grpc.crypto
 import com.google.protobuf.kotlin.toByteString
 import network.clusterone.api.grpc.GrpcClientService
 import network.clusterone.api.grpc.GrpcServiceId
-import network.clusterone.grpc.AccountServiceGrpcKt
-import network.clusterone.grpc.GetSeedFromMnemonicRequest
-import network.clusterone.grpc.SeedDeriveToAccountRequest
-import network.clusterone.grpc.SeedDeriveToAddressHexRequest
+import network.clusterone.grpc.service.account.AccountServiceGrpcKt
+import network.clusterone.grpc.service.account.GetSeedFromMnemonicRequest
+import network.clusterone.grpc.service.account.SeedDeriveToAccountRequest
+import network.clusterone.grpc.service.account.SeedDeriveToAddressHexRequest
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -36,7 +36,7 @@ class KeygenGrpcClient(
     suspend fun getAccountData(net: String, seed: String, path: String): AccountData {
         val bytes = Base64.getDecoder().decode(seed)
         val request = SeedDeriveToAccountRequest.newBuilder()
-            .setSymbol(net)
+            .setSymbol(net.uppercase())
             .setSeed(bytes.toByteString())
             .setPath(path)
             .build()
@@ -47,7 +47,7 @@ class KeygenGrpcClient(
     suspend fun getPublicKey(net: String, seed: String, path: String): String {
         val bytes = Base64.getDecoder().decode(seed)
         val request = SeedDeriveToAddressHexRequest.newBuilder()
-            .setSymbol(net)
+            .setSymbol(net.uppercase())
             .setSeed(bytes.toByteString())
             .setPath(path)
             .build()

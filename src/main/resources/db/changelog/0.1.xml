@@ -16,7 +16,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="activated" type="boolean" valueBoolean="false">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="created_date" type="timestamp"/>
         </createTable>

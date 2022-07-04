@@ -3,7 +3,7 @@ package network.clusterone.api.rest.auth
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import network.clusterone.api.security.JwtSigner
-import network.clusterone.api.security.UserDetailsResolverService
+import network.clusterone.api.security.UserResolverService
 import network.clusterone.api.services.auth.RegistrationService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,7 +18,7 @@ data class UserActivation(val email: String, val code: String)
 @Tag(name = "auth")
 class RegisterController(
     val registrationService: RegistrationService,
-    val userResolver: UserDetailsResolverService,
+    val userResolver: UserResolverService,
     val jwtSigner: JwtSigner
 ) {
 

@@ -6,7 +6,7 @@ import network.clusterone.api.domain.KeyStore
 import network.clusterone.api.grpc.listener.ListenerGrpcClient
 import network.clusterone.api.grpc.writer.WriterGrpcClient
 import network.clusterone.api.repository.AccountRepository
-import network.clusterone.api.security.UserDetailsResolverService
+import network.clusterone.api.security.UserResolverService
 import org.slf4j.Logger
 import org.springframework.stereotype.Service
 import org.webjars.NotFoundException
@@ -25,7 +25,7 @@ data class PatchAccountRequest(
 class AccountService(
     val logger: Logger,
     val repo: AccountRepository,
-    val userDetails: UserDetailsResolverService,
+    val userDetails: UserResolverService,
     val writer: WriterGrpcClient,
     val listener: ListenerGrpcClient
 ) {

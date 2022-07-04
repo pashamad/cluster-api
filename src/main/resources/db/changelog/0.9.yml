@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0.9
+      author: pm
+      changes:
+        - createIndex:
+            tableName: users
+            indexName: idx_user_credentials
+            columns:
+              - column:
+                  name: email
+              - column:
+                  name: password
+        - createIndex:
+            tableName: users
+            indexName: idx_user_email
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            tableName: wallet
+            indexName: idx_wallet_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: mnemonic
+            indexName: idx_mnemonic_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: keystore
+            indexName: idx_keystore_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: keystore
+            indexName: idx_keystore_mnemonic_id
+            columns:
+              - column:
+                  name: mnemonic_id
+        - createIndex:
+            tableName: account
+            indexName: idx_account_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: reset_pass_session
+            indexName: idx_reset_pass_session_id_code
+            columns:
+              - column:
+                  name: id
+              - column:
+                  name: code
+        - createIndex:
+            tableName: transaction
+            indexName: idx_transaction_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: verify_email_session
+            indexName: idx_verify_email_code
+            columns:
+              - column:
+                  name: code
+        - createIndex:
+            tableName: stake_record
+            indexName: idx_stake_record_user_id
+            columns:
+              - column:
+                  name: user_id

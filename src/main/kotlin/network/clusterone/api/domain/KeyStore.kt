@@ -31,9 +31,9 @@ open class KeyStore(
     var privateKey: String? = null,
 
     @field: NotNull
-    var user_id: UUID,
+    var userId: UUID,
 
-    var mnemonic_id: UUID? = null,
+    var mnemonicId: UUID? = null,
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

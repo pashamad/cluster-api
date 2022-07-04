@@ -6,7 +6,7 @@ import network.clusterone.api.errors.UserNotFoundException
 import network.clusterone.api.repository.ResetPassRepository
 import network.clusterone.api.repository.UserRepository
 import network.clusterone.api.security.JwtSigner
-import network.clusterone.api.security.UserDetailsResolverService
+import network.clusterone.api.security.UserResolverService
 import network.clusterone.api.services.mailer.SendMailTemplateData
 import network.clusterone.api.services.mailer.SendgridService
 import org.slf4j.Logger
@@ -23,7 +23,7 @@ import java.util.*
 @Service
 class PasswordService(
     val logger: Logger,
-    val userDetails: UserDetailsResolverService,
+    val userDetails: UserResolverService,
     val sendGrid: SendgridService,
     val jwtSigner: JwtSigner,
     val passwordEncoder: PasswordEncoder,
@@ -75,7 +75,6 @@ class PasswordService(
     fun confirmReset(sessionId: UUID, code: String, newPassword: String): Mono<String> {
         return getResetSession(sessionId, code)
             .flatMap {
-                // val user = it?.user!!
                 val userId = it?.user_id!!
                 logger.info("session user: $userId")
                 userRepository.findById(userId.toString())

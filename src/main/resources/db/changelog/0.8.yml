@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0.8
+      author: pm
+      changes:
+        - createTable:
+            tableName: stake_record
+            columns:
+              - column:
+                  name: id
+                  type: ${uuidType}
+                  defaultValueComputed: ${uuidFunction}
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: amount
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: stake_address
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: stake_tx
+                  type: text
+                  constraints:
+                    nullable: true # todo: not null
+              - column:
+                  name: vote_address
+                  type: text
+              - column:
+                  name: vote_tx
+                  type: text
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: account_id
+                  type: ${uuidType}
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_stake_record_account
+                    references: account(id)
+              - column:
+                  name: user_id
+                  type: ${uuidType}
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_stake_record__user
+                    references: users(id)

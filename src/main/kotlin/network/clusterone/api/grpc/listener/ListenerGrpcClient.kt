@@ -3,10 +3,14 @@ package network.clusterone.api.grpc.listener
 import io.grpc.Metadata
 import network.clusterone.api.grpc.GrpcClientService
 import network.clusterone.api.grpc.GrpcServiceId
-import network.clusterone.grpc.AddAddressRequest
-import network.clusterone.grpc.ListenerServiceGrpcKt
-import network.clusterone.grpc.Transaction
-import network.clusterone.grpc.TransactionsByAddressRequest
+import network.clusterone.grpc.messages.types.Transaction
+import network.clusterone.grpc.service.listener.AddAddressRequest
+import network.clusterone.grpc.service.listener.ListenerServiceGrpcKt
+import network.clusterone.grpc.service.listener.TransactionsByAddressRequest
+//import network.clusterone.grpc.AddAddressRequest
+//import network.clusterone.grpc.ListenerServiceGrpcKt
+//import network.clusterone.grpc.Transaction
+//import network.clusterone.grpc.TransactionsByAddressRequest
 import org.springframework.stereotype.Service
 import java.util.*
 

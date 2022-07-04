@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 import java.security.Principal
 
-data class SendAssetRequest(
+class SendAssetRequest(
     val amount: Float,
     val address: String
 )

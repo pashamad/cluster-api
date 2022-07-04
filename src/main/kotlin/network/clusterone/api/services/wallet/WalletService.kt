@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono
 import java.security.Principal
 import java.util.*
 
-data class AccountFromMnemonicRequest(
+class AccountFromMnemonicRequest(
     @Schema(
         description = "Mnemonic phrase.",
         example = "web survey patrol blush basic glass loop shield again seat vicious enable", required = true
@@ -32,12 +32,12 @@ data class AccountFromMnemonicRequest(
     val name: String,
     @Schema(
         description = "Optional password for seed generation.",
-        example = "", required = true, defaultValue = ""
+        example = "", required = false, defaultValue = ""
     )
     val password: String?
 )
 
-data class AccountFromSeedRequest(
+class AccountFromSeedRequest(
 
     val mnemonicId: UUID,
     val network: String,
@@ -69,8 +69,8 @@ class WalletService(
         return mnemonicService.getById(request.mnemonicId)
             .map {
                 val name = request.name ?: (it.name + request.network.uppercase())
-                val data = runBlocking { keygen.getAccountData(request.network, it.seed) }
-                KeyData(request.network, data.path, data.address, data.publicKey, data.privateKey, name, it.id)
+                val accData = runBlocking { keygen.getAccountData(request.network, it.seed) }
+                KeyData(request.network, accData.path, accData.address, accData.publicKey, accData.privateKey, name, it.id)
             }
             .flatMap { data ->
                 keysService.addUserKey(data, principal)

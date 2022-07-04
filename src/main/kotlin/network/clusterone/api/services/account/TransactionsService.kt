@@ -44,7 +44,7 @@ class TransactionsService(
     fun getTransactionById(principal: Principal, id: UUID): Mono<Transaction?> {
         return txRepository.findByIdAndEmail(id, principal.name)
             .map { it!! }
-            .flatMap(this::refreshTxStatus)
+            // .flatMap(this::refreshTxStatus)
     }
 
     fun getTransactionByHash(principal: Principal, hash: String): Mono<Transaction?> {
@@ -52,7 +52,7 @@ class TransactionsService(
     }
 
     private fun mapTransaction(
-        tx: network.clusterone.grpc.Transaction,
+        tx: network.clusterone.grpc.messages.types.Transaction,
         acc: Account
     ): Transaction {
         val type = if (acc.address.compareTo(tx.fromAddr) == 0) "send" else "receive"
@@ -75,9 +75,13 @@ class TransactionsService(
     }
 
     private fun mergeTransactions(
-        list: List<network.clusterone.grpc.Transaction>,
+        list: List<network.clusterone.grpc.messages.types.Transaction>,
         acc: Account
     ): Flux<Transaction> {
+
+        if (list.isEmpty()) {
+            return Flux.empty()
+        }
 
         return txRepository.findListByHashes(list.map { it.txHash }, acc.id!!)
             .collectList()
@@ -90,7 +94,7 @@ class TransactionsService(
     }
 
     private fun processTransaction(
-        src: network.clusterone.grpc.Transaction,
+        src: network.clusterone.grpc.messages.types.Transaction,
         tx: Transaction?,
         acc: Account
     ): Mono<Transaction> {
@@ -102,7 +106,7 @@ class TransactionsService(
         } else Mono.just(tx)
     }
 
-    private fun refreshTxStatus(tx: Transaction): Mono<Transaction> {
+    /*private fun refreshTxStatus(tx: Transaction): Mono<Transaction> {
         if (arrayOf("FINALIZED", "FAILED").any { it in tx.status }) {
             return Mono.just(tx)
         }
@@ -118,5 +122,5 @@ class TransactionsService(
                 // txRepository.save(it)
                 Mono.just(it)
             }
-    }
+    }*/
 }

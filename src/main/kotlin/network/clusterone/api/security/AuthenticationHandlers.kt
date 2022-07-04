@@ -20,12 +20,14 @@ class AuthFailureHandler : ServerAuthenticationFailureHandler {
     }
 }
 
+@Suppress("unused")
 class AuthAccessDeniedHandler : ServerAccessDeniedHandler {
     override fun handle(exchange: ServerWebExchange?, denied: AccessDeniedException?): Mono<Void> {
         return Mono.error(denied!!)
     }
 }
 
+@Suppress("unused")
 class AuthEntryPoint : ServerAuthenticationEntryPoint {
 
     override fun commence(exchange: ServerWebExchange?, ex: AuthenticationException?): Mono<Void> {
